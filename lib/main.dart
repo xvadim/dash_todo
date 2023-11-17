@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'presentation/tasks_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const DashTodoApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class DashTodoApp extends StatelessWidget {
+  const DashTodoApp({super.key});
 
   @override
   Widget build(BuildContext context) {

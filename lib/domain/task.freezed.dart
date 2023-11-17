@@ -203,7 +203,7 @@ class _$TaskImpl implements _Task {
       required this.text,
       final List<String> contexts = const [],
       final List<String> projects = const [],
-      required this.rawString})
+      this.rawString = ''})
       : _contexts = contexts,
         _projects = projects;
 
@@ -240,6 +240,7 @@ class _$TaskImpl implements _Task {
   }
 
   @override
+  @JsonKey()
   final String rawString;
 
   @override
@@ -298,7 +299,7 @@ abstract class _Task implements Task {
       required final String text,
       final List<String> contexts,
       final List<String> projects,
-      required final String rawString}) = _$TaskImpl;
+      final String rawString}) = _$TaskImpl;
 
   @override
   int get id;
