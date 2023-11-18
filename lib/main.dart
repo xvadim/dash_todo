@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'common/consts.dart';
 import 'helpers/language_helper.dart';
 import 'presentation/tasks_page.dart';
 
@@ -29,12 +30,15 @@ class DashTodoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Dash todO',
+      title: appTitle,
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
         useMaterial3: true,
       ),
-      home: const TasksPage(title: 'Dash todO'),
+      home: const TasksPage(title: appTitle),
     );
   }
 }
