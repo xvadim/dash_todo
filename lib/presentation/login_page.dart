@@ -99,15 +99,6 @@ class _LoginPageState extends State<LoginPage> {
 
     final name = await Dropbox.getAccountName();
     print('NAME: $name');
-    final accessToken =
-        'sl.BqXuQ0-y9FDNBbSDtDBK4if6yy5x6tv28wPfDcpyORX3rP-5HtnG2BZP2Mw0hdmb_gD_Qn-y1AAFhrWNEztAXiEdAcAQBdW4gMlogMKUGIZQTTH1Lvk4-h6sUZKRAIJY0dHL68w9VKhW';
-    var url =
-        Uri.parse('https://api.dropboxapi.com/2/users/get_current_account');
-    var response =
-        await http.post(url, headers: {'Authorization': 'Bearer $accessToken'});
-    print(response.body);
-    final acc = AccountInfo.fromMap(jsonDecode(response.body));
-    // print('ACC: $acc -- ${acc.email}');
   }
 
   Future<void> _logout() async {
