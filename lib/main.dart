@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 
 import 'common/consts.dart';
 import 'helpers/language_helper.dart';
+import 'presentation/login_page.dart';
 import 'presentation/tasks_page.dart';
 
 Future<void> main() async {
@@ -38,7 +39,8 @@ class DashTodoApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
         useMaterial3: true,
       ),
-      home: const TasksPage(title: appTitle),
+      // home: const TasksPage(title: appTitle),
+      home: const LoginPage(),
     );
   }
 }

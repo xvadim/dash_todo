@@ -22,8 +22,8 @@ mixin _$Task {
   DateTime? get completionDate => throw _privateConstructorUsedError;
   DateTime? get creationDate => throw _privateConstructorUsedError;
   String get text => throw _privateConstructorUsedError;
-  List<String> get contexts => throw _privateConstructorUsedError;
   List<String> get projects => throw _privateConstructorUsedError;
+  List<String> get contexts => throw _privateConstructorUsedError;
   String get rawString => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -42,8 +42,8 @@ abstract class $TaskCopyWith<$Res> {
       DateTime? completionDate,
       DateTime? creationDate,
       String text,
-      List<String> contexts,
       List<String> projects,
+      List<String> contexts,
       String rawString});
 }
 
@@ -66,8 +66,8 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
     Object? completionDate = freezed,
     Object? creationDate = freezed,
     Object? text = null,
-    Object? contexts = null,
     Object? projects = null,
+    Object? contexts = null,
     Object? rawString = null,
   }) {
     return _then(_value.copyWith(
@@ -95,13 +95,13 @@ class _$TaskCopyWithImpl<$Res, $Val extends Task>
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
-      contexts: null == contexts
-          ? _value.contexts
-          : contexts // ignore: cast_nullable_to_non_nullable
-              as List<String>,
       projects: null == projects
           ? _value.projects
           : projects // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      contexts: null == contexts
+          ? _value.contexts
+          : contexts // ignore: cast_nullable_to_non_nullable
               as List<String>,
       rawString: null == rawString
           ? _value.rawString
@@ -125,8 +125,8 @@ abstract class _$$TaskImplCopyWith<$Res> implements $TaskCopyWith<$Res> {
       DateTime? completionDate,
       DateTime? creationDate,
       String text,
-      List<String> contexts,
       List<String> projects,
+      List<String> contexts,
       String rawString});
 }
 
@@ -146,8 +146,8 @@ class __$$TaskImplCopyWithImpl<$Res>
     Object? completionDate = freezed,
     Object? creationDate = freezed,
     Object? text = null,
-    Object? contexts = null,
     Object? projects = null,
+    Object? contexts = null,
     Object? rawString = null,
   }) {
     return _then(_$TaskImpl(
@@ -175,13 +175,13 @@ class __$$TaskImplCopyWithImpl<$Res>
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
               as String,
-      contexts: null == contexts
-          ? _value._contexts
-          : contexts // ignore: cast_nullable_to_non_nullable
-              as List<String>,
       projects: null == projects
           ? _value._projects
           : projects // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      contexts: null == contexts
+          ? _value._contexts
+          : contexts // ignore: cast_nullable_to_non_nullable
               as List<String>,
       rawString: null == rawString
           ? _value.rawString
@@ -201,11 +201,11 @@ class _$TaskImpl implements _Task {
       this.completionDate,
       this.creationDate,
       required this.text,
-      final List<String> contexts = const [],
       final List<String> projects = const [],
+      final List<String> contexts = const [],
       this.rawString = ''})
-      : _contexts = contexts,
-        _projects = projects;
+      : _projects = projects,
+        _contexts = contexts;
 
   @override
   final int id;
@@ -221,15 +221,6 @@ class _$TaskImpl implements _Task {
   final DateTime? creationDate;
   @override
   final String text;
-  final List<String> _contexts;
-  @override
-  @JsonKey()
-  List<String> get contexts {
-    if (_contexts is EqualUnmodifiableListView) return _contexts;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_contexts);
-  }
-
   final List<String> _projects;
   @override
   @JsonKey()
@@ -239,13 +230,22 @@ class _$TaskImpl implements _Task {
     return EqualUnmodifiableListView(_projects);
   }
 
+  final List<String> _contexts;
+  @override
+  @JsonKey()
+  List<String> get contexts {
+    if (_contexts is EqualUnmodifiableListView) return _contexts;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_contexts);
+  }
+
   @override
   @JsonKey()
   final String rawString;
 
   @override
   String toString() {
-    return 'Task(id: $id, isCompleted: $isCompleted, priority: $priority, completionDate: $completionDate, creationDate: $creationDate, text: $text, contexts: $contexts, projects: $projects, rawString: $rawString)';
+    return 'Task(id: $id, isCompleted: $isCompleted, priority: $priority, completionDate: $completionDate, creationDate: $creationDate, text: $text, projects: $projects, contexts: $contexts, rawString: $rawString)';
   }
 
   @override
@@ -263,8 +263,8 @@ class _$TaskImpl implements _Task {
             (identical(other.creationDate, creationDate) ||
                 other.creationDate == creationDate) &&
             (identical(other.text, text) || other.text == text) &&
-            const DeepCollectionEquality().equals(other._contexts, _contexts) &&
             const DeepCollectionEquality().equals(other._projects, _projects) &&
+            const DeepCollectionEquality().equals(other._contexts, _contexts) &&
             (identical(other.rawString, rawString) ||
                 other.rawString == rawString));
   }
@@ -278,8 +278,8 @@ class _$TaskImpl implements _Task {
       completionDate,
       creationDate,
       text,
-      const DeepCollectionEquality().hash(_contexts),
       const DeepCollectionEquality().hash(_projects),
+      const DeepCollectionEquality().hash(_contexts),
       rawString);
 
   @JsonKey(ignore: true)
@@ -297,8 +297,8 @@ abstract class _Task implements Task {
       final DateTime? completionDate,
       final DateTime? creationDate,
       required final String text,
-      final List<String> contexts,
       final List<String> projects,
+      final List<String> contexts,
       final String rawString}) = _$TaskImpl;
 
   @override
@@ -314,9 +314,9 @@ abstract class _Task implements Task {
   @override
   String get text;
   @override
-  List<String> get contexts;
-  @override
   List<String> get projects;
+  @override
+  List<String> get contexts;
   @override
   String get rawString;
   @override
