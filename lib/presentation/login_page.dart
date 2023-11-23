@@ -69,36 +69,32 @@ class _LoginPageState extends State<LoginPage> {
     await Dropbox.authorizePKCE();
   }
 
-  Future<void> _loginToDropbox() async {
+  Future<bool> _loginToDropbox() async {
     final prefs = await SharedPreferences.getInstance();
     String? credentials = prefs.getString(keyDBCredentials);
-    print('CREDS PREFS: $credentials');
-    // credentials = null;
     if (credentials == null) {
       credentials = await Dropbox.getCredentials();
-      print('CREDS1111 : $credentials');
       prefs.setString(keyDBCredentials, credentials!);
     }
 
-    // final credentials1111 = await Dropbox.getCredentials();
-    // print('CREDS1111 : $credentials1111');
-
-    print('CREDS1 : $credentials');
-
+    String? testCredentials;
+    //ignore: unnecessary_null_comparison
     if (credentials != null) {
-      print('AUTH');
       await Dropbox.authorizeWithCredentials(credentials);
-      final credentials2 = await Dropbox.getCredentials();
-      print('CREDS2: $credentials2');
+      testCredentials = await Dropbox.getCredentials();
     }
+    return testCredentials != null;
   }
 
   Future<void> _getAccountInfo() async {
-    final result = await Dropbox.listFolder('');
+    final result = await Dropbox.listFolder('/сделать');
     print(result);
 
     final name = await Dropbox.getAccountName();
     print('NAME: $name');
+
+    final acc = await Dropbox.getCurrentAccount(forceCredentialsUse: true);
+    print('ACC: ${acc?.name?.displayName} == ${acc?.profilePhotoUrl}');
   }
 
   Future<void> _logout() async {

@@ -32,12 +32,12 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.6
-  dropbox_client: ^1.1.0
+  dropbox_client:
+    path: ../FlutterDropbox
   easy_localization: ^3.0.3
   envied: ^0.5.2
   intl: ^0.18.1
   freezed_annotation: ^2.4.1
-  http: ^0.13.3  # !!! remove
   shared_preferences: ^2.2.2
 
 dev_dependencies:
