@@ -180,10 +180,11 @@ packages:
   dropbox_client:
     dependency: "direct main"
     description:
-      path: "../FlutterDropbox"
-      relative: true
-    source: path
-    version: "1.1.0"
+      name: dropbox_client
+      sha256: e72af5f910c9de0084ce1facf03d47be1b1e191d2a382493c2337e4a9ae9db08
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.1"
   easy_localization:
     dependency: "direct main"
     description:
