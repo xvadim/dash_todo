@@ -1,4 +1,4 @@
-import 'package:dash_todo/domain/task.dart';
+import 'package:dash_todo/features/task/domain/task.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

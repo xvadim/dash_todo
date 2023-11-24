@@ -1,12 +1,8 @@
-import 'dart:convert';
-
-import 'package:http/http.dart' as http;
-import 'package:dropbox_client/account_info.dart';
 import 'package:dropbox_client/dropbox_client.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../common/env.dart';
+import '../../../common/env.dart';
 
 const String dropboxClientId = 'dash-todo-dropbox';
 const String keyDBCredentials = 'DBCredentials';

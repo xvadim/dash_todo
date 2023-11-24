@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'common/consts.dart';
+import 'features/authentication/presentation/login_page.dart';
 import 'helpers/language_helper.dart';
-import 'presentation/login_page.dart';
-import 'presentation/tasks_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

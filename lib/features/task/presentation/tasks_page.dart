@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-import '../common/consts.dart';
+import '../../../common/consts.dart';
 
 class TasksPage extends StatelessWidget {
   const TasksPage({super.key, required this.title});
