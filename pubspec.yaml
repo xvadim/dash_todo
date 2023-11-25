@@ -37,6 +37,7 @@ dependencies:
   envied: ^0.5.2
   intl: ^0.18.1
   flutter_riverpod: ^2.4.8
+  font_awesome_flutter: ^10.6.0
   freezed_annotation: ^2.4.1
   shared_preferences: ^2.2.2
   riverpod_annotation: ^2.3.2

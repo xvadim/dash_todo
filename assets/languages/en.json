@@ -5,5 +5,12 @@
   "menu": {
     "settings": "Settings",
     "about": "About"
+  },
+  "signin": {
+    "title": "Sign-in",
+    "signinDropbox": "Sign in with Dropbox",
+    "signinLocally": "Sign in locally",
+    "syncDropbox": "for Dropbox sync",
+    "syncLocally": "for files on this device"
   }
 }

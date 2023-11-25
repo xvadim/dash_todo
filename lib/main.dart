@@ -1,9 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'common/consts.dart';
 import 'features/authentication/presentation/login_page.dart';
+import 'features/authentication/presentation/sign_in_page.dart';
+import 'features/settings/data/settings_repository.dart';
 import 'helpers/language_helper.dart';
 
 Future<void> main() async {
@@ -14,12 +17,18 @@ Future<void> main() async {
 
   await EasyLocalization.ensureInitialized();
 
+  final container = ProviderContainer();
+  await container.read(settingsRepositoryProvider.future);
+
   runApp(
-    EasyLocalization(
-      supportedLocales: LanguageHelper.sLocales.values.toList(),
-      fallbackLocale: LanguageHelper.kEnglishLocale,
-      path: 'assets/languages',
-      child: const DashTodoApp(),
+    UncontrolledProviderScope(
+      container: container,
+      child: EasyLocalization(
+        supportedLocales: LanguageHelper.sLocales.values.toList(),
+        fallbackLocale: LanguageHelper.kEnglishLocale,
+        path: 'assets/languages',
+        child: const DashTodoApp(),
+      ),
     ),
   );
 }
@@ -39,7 +48,7 @@ class DashTodoApp extends StatelessWidget {
         useMaterial3: true,
       ),
       // home: const TasksPage(title: appTitle),
-      home: const LoginPage(),
+      home: const SignInPage(),
     );
   }
 }
