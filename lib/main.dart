@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'common/consts.dart';
-import 'features/authentication/presentation/login_page.dart';
-import 'features/authentication/presentation/sign_in_page.dart';
+import 'dash_todo_app.dart';
 import 'features/settings/data/settings_repository.dart';
 import 'helpers/language_helper.dart';
 
@@ -31,24 +29,4 @@ Future<void> main() async {
       ),
     ),
   );
-}
-
-class DashTodoApp extends StatelessWidget {
-  const DashTodoApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: appTitle,
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
-      locale: context.locale,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
-        useMaterial3: true,
-      ),
-      // home: const TasksPage(title: appTitle),
-      home: const SignInPage(),
-    );
-  }
 }
