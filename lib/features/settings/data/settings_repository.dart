@@ -13,6 +13,10 @@ class SettingsRepository {
   String? dropboxCredentials() =>
       _sharedPrefs.getString(_keyDropboxCredentials);
 
+  Future<void> unlinkDropbox() async {
+    await _sharedPrefs.remove(_keyDropboxCredentials);
+  }
+
   final SharedPreferences _sharedPrefs;
 
   static const _keyDropboxCredentials = 'dropboxCredentials';

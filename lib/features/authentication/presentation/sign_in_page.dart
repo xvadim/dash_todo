@@ -6,12 +6,41 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../common/build_context_extension.dart';
 import '../../../common/sizes.dart';
 import '../../../common/ui_utils.dart';
+import 'dropbox_auth_controller.dart';
 
-class SignInPage extends ConsumerWidget {
+class SignInPage extends ConsumerStatefulWidget {
   const SignInPage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState createState() => _SignInPageState();
+}
+
+class _SignInPageState extends ConsumerState<SignInPage> {
+  late final AppLifecycleListener _listener;
+  bool _isAuthInProgress = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _listener = AppLifecycleListener(
+      onShow: () => print('show'),
+      onResume: () async => _loginDropbox(),
+      onHide: () => print('hide'),
+      onInactive: () => print('inactive'),
+      onPause: () => print('pause'),
+    );
+  }
+
+  @override
+  void dispose() {
+    _listener.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final state = ref.watch(dropboxAuthControllerProvider);
+    print('AUTH CTRL STATE $state');
     return SafeArea(
       child: Scaffold(
         body: Center(
@@ -29,7 +58,7 @@ class SignInPage extends ConsumerWidget {
                 ),
                 title: 'signin.signinDropbox'.tr(),
                 subtitle: 'signin.syncDropbox'.tr(),
-                onPressed: () => print('tap'),
+                onPressed: () async => _authorizeDropbox(),
               ),
               _SignInButton(
                 icon: const FaIcon(
@@ -45,6 +74,20 @@ class SignInPage extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _authorizeDropbox() async {
+    print('PAGE START AUTH');
+    _isAuthInProgress = true;
+    await ref.read(dropboxAuthControllerProvider.notifier).authorize();
+  }
+
+  Future<void> _loginDropbox() async {
+    print('PAGE LOGIN $_isAuthInProgress');
+    if (_isAuthInProgress) {
+      await ref.read(dropboxAuthControllerProvider.notifier).login();
+      _isAuthInProgress = false;
+    }
   }
 }
 
