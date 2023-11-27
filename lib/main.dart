@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'dash_todo_app.dart';
+import 'features/authentication/data/dropbox_auth_repository.dart';
 import 'features/settings/data/settings_repository.dart';
 import 'helpers/language_helper.dart';
 
@@ -17,6 +18,7 @@ Future<void> main() async {
 
   final container = ProviderContainer();
   await container.read(settingsRepositoryProvider.future);
+  container.read(dropboxAuthRepositoryProvider).loadUser();
 
   runApp(
     UncontrolledProviderScope(

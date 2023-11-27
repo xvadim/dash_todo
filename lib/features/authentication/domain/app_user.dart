@@ -1,11 +1,11 @@
 class AppUser {
   const AppUser({
-    this.name,
-    this.email,
-    this.avatarUrl,
+    required this.name,
+    required this.email,
+    required this.avatarUrl,
   });
 
-  final String? name;
-  final String? email;
-  final String? avatarUrl;
+  final String name;
+  final String email;
+  final String avatarUrl;
 }

@@ -12,11 +12,9 @@ class DropboxAuthController extends _$DropboxAuthController {
   }
 
   Future<void> authorize() async {
-    print('CTRL AUTH');
     final authRepository = ref.watch(dropboxAuthRepositoryProvider);
     state = const AsyncLoading();
     await authRepository.authorize();
-    // state = await AsyncValue.guard(onboardingRepository.setOnboardingComplete);
   }
 
   Future<void> login() async {

@@ -40,6 +40,7 @@ GoRouter goRouter(GoRouterRef ref) {
       }
       return null;
     },
+    refreshListenable: dropboxAuthRepository.appUser,
     routes: [
       GoRoute(
         path: _signInPath,

@@ -31,6 +31,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  cached_network_image: ^3.3.0
   cupertino_icons: ^1.0.6
   dropbox_client: ^1.1.1
   easy_localization: ^3.0.3

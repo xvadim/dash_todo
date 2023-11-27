@@ -22,13 +22,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
   @override
   void initState() {
     super.initState();
-    _listener = AppLifecycleListener(
-      onShow: () => print('show'),
-      onResume: () async => _loginDropbox(),
-      onHide: () => print('hide'),
-      onInactive: () => print('inactive'),
-      onPause: () => print('pause'),
-    );
+    _listener = AppLifecycleListener(onResume: () async => _loginDropbox());
   }
 
   @override
@@ -39,8 +33,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(dropboxAuthControllerProvider);
-    print('AUTH CTRL STATE $state');
+    // final state = ref.watch(dropboxAuthControllerProvider);
     return SafeArea(
       child: Scaffold(
         body: Center(
@@ -77,13 +70,11 @@ class _SignInPageState extends ConsumerState<SignInPage> {
   }
 
   Future<void> _authorizeDropbox() async {
-    print('PAGE START AUTH');
     _isAuthInProgress = true;
     await ref.read(dropboxAuthControllerProvider.notifier).authorize();
   }
 
   Future<void> _loginDropbox() async {
-    print('PAGE LOGIN $_isAuthInProgress');
     if (_isAuthInProgress) {
       await ref.read(dropboxAuthControllerProvider.notifier).login();
       _isAuthInProgress = false;

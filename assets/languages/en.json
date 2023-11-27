@@ -4,7 +4,8 @@
   },
   "menu": {
     "settings": "Settings",
-    "about": "About"
+    "about": "About",
+    "logout": "Logout"
   },
   "signin": {
     "title": "Sign-in",
