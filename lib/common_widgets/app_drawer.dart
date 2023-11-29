@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../common/build_context_extension.dart';
 import '../common/consts.dart';
@@ -9,6 +10,7 @@ import '../common/sizes.dart';
 import '../features/authentication/data/dropbox_auth_repository.dart';
 import '../features/authentication/domain/app_user.dart';
 import '../features/settings/data/settings_repository.dart';
+import '../routing/app_router.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
@@ -41,7 +43,10 @@ class AppDrawer extends StatelessWidget {
         ListTile(
           leading: const Icon(Icons.settings),
           title: Text('menu.settings'.tr()),
-          onTap: () => {},
+          onTap: () {
+            context.pop();
+            context.pushNamed(AppRoute.filesSetup.name);
+          },
         ),
         const Divider(),
         AboutListTile(

@@ -13,5 +13,15 @@
     "signinLocally": "Sign in locally",
     "syncDropbox": "for Dropbox sync",
     "syncLocally": "for files on this device"
+  },
+  "settings": {
+    "dropboxFilesSetupTitle": "Select files in Dropbox",
+    "todoFile": "Todo.txt file:",
+    "archiveFile": "Archive file:",
+    "dropboxFilesSelectorTitle": "Dropbox files"
+  },
+  "common": {
+    "done": "Done",
+    "choose": "Choose"
   }
 }

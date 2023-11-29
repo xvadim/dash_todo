@@ -1,6 +1,7 @@
 import 'package:dropbox_client/dropbox_client.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
 import '../../../common/env.dart';
 import '../../settings/data/settings_repository.dart';
 import '../domain/app_user.dart';
@@ -21,6 +22,7 @@ class DropboxAuthRepository {
   }
 
   Future<bool> login() async {
+    print('LOGIN!!');
     if (!_isInitialized) {
       await _init();
     }
@@ -59,6 +61,7 @@ class DropboxAuthRepository {
   static const String _dropboxClientId = 'dash-todo-dropbox';
 
   Future<void> _init() async {
+    print('DB INIT');
     await Dropbox.init(_dropboxClientId, Env.dropboxAppKey, Env.dropboxSecret);
 
     _isInitialized = true;
@@ -101,14 +104,6 @@ class DropboxAuthRepository {
       appUserAvatarUrl: userAvatarUrl,
     );
   }
-
-  /*
-  Future<void> _getAccountInfo() async {
-    final result = await Dropbox.listFolder('/сделать');
-    print(result);
-
-  }
-   */
 }
 
 @Riverpod(keepAlive: true)

@@ -16,9 +16,7 @@ Future<void> main() async {
 
   await EasyLocalization.ensureInitialized();
 
-  final container = ProviderContainer();
-  await container.read(settingsRepositoryProvider.future);
-  container.read(dropboxAuthRepositoryProvider).loadUser();
+  final container = await _initContainer();
 
   runApp(
     UncontrolledProviderScope(
@@ -31,4 +29,15 @@ Future<void> main() async {
       ),
     ),
   );
+}
+
+Future<ProviderContainer> _initContainer() async {
+  final container = ProviderContainer();
+  await container.read(settingsRepositoryProvider.future);
+  final dbProvider = container.read(dropboxAuthRepositoryProvider);
+  if (dbProvider.isAuthorized) {
+    await dbProvider.login();
+  }
+  dbProvider.loadUser();
+  return container;
 }

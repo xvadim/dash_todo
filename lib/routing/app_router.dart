@@ -4,6 +4,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../features/authentication/data/dropbox_auth_repository.dart';
 import '../features/authentication/presentation/sign_in_page.dart';
+import '../features/files_repository/presentation/dropbox_file_selector_page.dart';
+import '../features/settings/presentation/files_setup_page.dart';
 import '../features/tasks/presentation/tasks_page.dart';
 
 part 'app_router.g.dart';
@@ -11,12 +13,16 @@ part 'app_router.g.dart';
 enum AppRoute {
   signIn,
   tasks,
+  filesSetup,
+  dropboxFilesSelector,
 }
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 const _signInPath = '/signIn';
 const _tasksPath = '/tasks';
+const _filesSetup = '/filesSetup';
+const _dropboxFilesSelector = 'dropboxFilesSelector';
 
 @riverpod
 GoRouter goRouter(GoRouterRef ref) {
@@ -31,7 +37,7 @@ GoRouter goRouter(GoRouterRef ref) {
       final isAuthorized = dropboxAuthRepository.isAuthorized;
       if (isAuthorized) {
         if (path.startsWith(_signInPath)) {
-          return _tasksPath;
+          return _filesSetup;
         }
       } else {
         if (path != _signInPath) {
@@ -55,6 +61,18 @@ GoRouter goRouter(GoRouterRef ref) {
         pageBuilder: (context, state) => const NoTransitionPage(
           child: TasksPage(title: 'Dash todO'),
         ),
+      ),
+      GoRoute(
+        path: _filesSetup,
+        name: AppRoute.filesSetup.name,
+        builder: (context, state) => const FilesSetupPage(),
+        routes: [
+          GoRoute(
+            path: _dropboxFilesSelector,
+            name: AppRoute.dropboxFilesSelector.name,
+            builder: (context, state) => const DropboxFileSelectorPage(),
+          ),
+        ],
       ),
     ],
   );
