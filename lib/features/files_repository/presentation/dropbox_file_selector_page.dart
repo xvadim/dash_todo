@@ -61,17 +61,19 @@ class DropboxFileSelector extends ConsumerWidget {
     };
   }
 
-  void _onItemTap(
+  Future<void> _onItemTap(
     BuildContext context,
     WidgetRef ref,
     String folder,
     int index,
     DropboxItem item,
-  ) {
+  ) async {
     if (item.isFile) {
       context.pop('$folder/${item.name}');
     } else {
-      ref.read(dropboxFilesControllerProvider.notifier).listFolder(item.path);
+      await ref
+          .read(dropboxFilesControllerProvider.notifier)
+          .listFolder(item.path);
     }
   }
 }

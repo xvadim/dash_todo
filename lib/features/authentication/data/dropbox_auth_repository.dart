@@ -22,7 +22,6 @@ class DropboxAuthRepository {
   }
 
   Future<bool> login() async {
-    print('LOGIN!!');
     if (!_isInitialized) {
       await _init();
     }
@@ -61,8 +60,11 @@ class DropboxAuthRepository {
   static const String _dropboxClientId = 'dash-todo-dropbox';
 
   Future<void> _init() async {
-    print('DB INIT');
-    await Dropbox.init(_dropboxClientId, Env.dropboxAppKey, Env.dropboxSecret);
+    await Dropbox.init(
+      _dropboxClientId,
+      Env.dropboxAppKey,
+      Env.dropboxSecret,
+    );
 
     _isInitialized = true;
   }

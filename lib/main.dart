@@ -38,6 +38,6 @@ Future<ProviderContainer> _initContainer() async {
   if (dbProvider.isAuthorized) {
     await dbProvider.login();
   }
-  dbProvider.loadUser();
+  await dbProvider.loadUser();
   return container;
 }

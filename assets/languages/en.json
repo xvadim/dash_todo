@@ -23,5 +23,9 @@
   "common": {
     "done": "Done",
     "choose": "Choose"
+  },
+  "actions": {
+    "download": "Download tasks",
+    "upload": "Upload tasks"
   }
 }

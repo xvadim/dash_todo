@@ -60,6 +60,7 @@ class Task with _$Task {
   }
 }
 
+//TODO: add the compareTo method & Comparable interface
 extension TaskEx on Task {
   String toRawString() {
     if (rawString.isNotEmpty) {

@@ -7,7 +7,7 @@ part of 'dropbox_files_controller.dart';
 // **************************************************************************
 
 String _$dropboxFilesControllerHash() =>
-    r'fb99dd28bfb3dd28dd5f654aa37cd470a521b034';
+    r'02be68fb7a66e13d11b13a6e718be751b8495e8a';
 
 /// See also [DropboxFilesController].
 @ProviderFor(DropboxFilesController)

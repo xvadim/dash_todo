@@ -103,7 +103,14 @@ class _FilesSetupPageState extends ConsumerState<FilesSetupPage> {
       todoFile: _files[0],
       archiveFile: _files[1],
     );
-    if (mounted) context.pop();
+    if (mounted) {
+      if (context.canPop()) {
+        context.pop();
+      } else {
+        //It's a case after login to Dropbox and setup files
+        context.goNamed(AppRoute.tasks.name);
+      }
+    }
   }
 
   bool get _isDoneEnabled =>

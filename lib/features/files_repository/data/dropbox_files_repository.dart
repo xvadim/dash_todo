@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:dropbox_client/dropbox_client.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../common/logger.dart';
 import '../../settings/data/settings_repository.dart';
 import '../domain/dropbox_item.dart';
 
@@ -18,9 +22,28 @@ class DropboxFilesRepository {
         .toList();
   }
 
+  Future<(String?, String?)> downloadTasks() async {
+    String? todoFile = _settingsRepository.todoRemoteFile;
+    String? archiveFile = _settingsRepository.archiveRemoteFile;
+    logger.i('Todo and Done files are not set');
+    if (todoFile == null && archiveFile == null) {
+      return (null, null);
+    }
+
+    final Directory tempDir = await getTemporaryDirectory();
+    final localTodoFile = '${tempDir.path}/todo.txt';
+    final localArchiveFile = '${tempDir.path}/done.txt';
+
+    await Dropbox.download(todoFile!, localTodoFile);
+    await Dropbox.download(archiveFile!, localArchiveFile);
+
+    return (localTodoFile, localArchiveFile);
+  }
+
   final SettingsRepository _settingsRepository;
 }
 
+//TODO: do we need keepAlive?
 @Riverpod(keepAlive: true)
 DropboxFilesRepository dropboxFilesRepository(DropboxFilesRepositoryRef ref) {
   return DropboxFilesRepository(

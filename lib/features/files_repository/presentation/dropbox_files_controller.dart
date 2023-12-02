@@ -15,7 +15,6 @@ final class ListFolderResult {
 class DropboxFilesController extends _$DropboxFilesController {
   @override
   FutureOr<ListFolderResult> build() async {
-    print('BUILD DropboxFilesController');
     return _listFolder();
   }
 
