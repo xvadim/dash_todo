@@ -5,6 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../common/logger.dart';
 import '../domain/task.dart';
+import '../domain/todos.dart';
 
 part 'tasks_repository.g.dart';
 
@@ -21,7 +22,7 @@ class TasksRepository {
     await _copyFile(archiveFileName, localFileName);
   }
 
-  Future<List<Task>> loadTasks() async {
+  Future<Todos> loadTodos() async {
     logger.d('Load tasks');
     final Directory docDirectory = await getApplicationDocumentsDirectory();
     final locTodoFileName = _localTodoFile(docDirectory);
@@ -29,7 +30,7 @@ class TasksRepository {
 
     if (!todoFile.existsSync()) {
       logger.i("File $locTodoFileName doesn't exists");
-      return [];
+      return const Todos(tasks: [], projects: {});
     }
 
     final todos = await todoFile.readAsLines();
@@ -40,7 +41,13 @@ class TasksRepository {
         .toList();
     //temporary
     tasks.sort((a, b) => a.rawString.compareTo(b.rawString));
-    return tasks;
+
+    _tasks.clear();
+    _tasks.addAll(tasks);
+
+    _updateProjects();
+
+    return Todos(tasks: _tasks, projects: _projects);
   }
 
   Future<void> _copyFile(String origName, String destName) async {
@@ -57,6 +64,18 @@ class TasksRepository {
 
   String _localTodoFile(Directory directory) => '${directory.path}/todo.txt';
   String _localDoneFile(Directory directory) => '${directory.path}/done.txt';
+
+  final List<Task> _tasks = [];
+  final Set<String> _projects = {};
+
+  void _updateProjects() {
+    _projects.clear();
+    for (final t in _tasks) {
+      _updateProjectsFromTask(t);
+    }
+  }
+
+  void _updateProjectsFromTask(Task task) => _projects.addAll(task.projects);
 }
 
 @Riverpod(keepAlive: true)

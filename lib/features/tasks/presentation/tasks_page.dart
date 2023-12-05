@@ -7,6 +7,7 @@ import '../../../common/sizes.dart';
 import '../../../common_widgets/app_drawer.dart';
 import '../application/tasks_controller.dart';
 import 'widgets/list_item_animated_wrapper.dart';
+import 'widgets/project_chooser.dart';
 import 'widgets/toto_item.dart';
 
 enum _MenuItem {
@@ -25,7 +26,8 @@ class TasksPage extends ConsumerWidget {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: Text(title),
+          // title: Text(title),
+          title: const ProjectChooser(),
           actions: [
             PopupMenuButton<_MenuItem>(
               icon: const Icon(Icons.more_vert),
@@ -64,9 +66,7 @@ class TasksPage extends ConsumerWidget {
     WidgetRef ref,
     _MenuItem item,
   ) async {
-    final taskController = ref.watch(
-      tasksControllerProvider.notifier,
-    );
+    final taskController = ref.read(tasksControllerProvider.notifier);
     taskController.downloadTasks();
   }
 }
@@ -84,13 +84,13 @@ class _TasksListViewState extends ConsumerState<_TasksListView> {
       ValueNotifier<ScrollDirection>(ScrollDirection.forward);
   @override
   Widget build(BuildContext context) {
-    final state = ref.watch(tasksControllerProvider);
+    final state = ref.watch(filteredTasksProvider);
 
     return switch (state) {
       AsyncError(:final error) => Center(
           child: Text('Something went wrong: $error'),
         ),
-      AsyncData(value: final tasks) => Padding(
+      AsyncData(value: final todos) => Padding(
           padding: const EdgeInsets.only(right: 1.0),
           child: NotificationListener<UserScrollNotification>(
             onNotification: (UserScrollNotification notification) {
@@ -104,12 +104,12 @@ class _TasksListViewState extends ConsumerState<_TasksListView> {
               cacheExtent: 0,
               slivers: [
                 SliverList.separated(
-                  itemCount: tasks.length,
+                  itemCount: todos.tasks.length,
                   itemBuilder: (_, idx) => ValueListenableBuilder(
                     valueListenable: scrollDirectionNotifier,
                     child: ProviderScope(
                       overrides: [
-                        currentTask.overrideWithValue(tasks[idx]),
+                        currentTask.overrideWithValue(todos.tasks[idx]),
                       ],
                       child: const TodoItem(),
                     ),

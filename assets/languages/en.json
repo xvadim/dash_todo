@@ -27,5 +27,8 @@
   "actions": {
     "download": "Download tasks",
     "upload": "Upload tasks"
+  },
+  "filter": {
+    "allTasks": "All Tasks"
   }
 }

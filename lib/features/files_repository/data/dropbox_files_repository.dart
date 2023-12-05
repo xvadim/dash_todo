@@ -25,8 +25,8 @@ class DropboxFilesRepository {
   Future<(String?, String?)> downloadTasks() async {
     String? todoFile = _settingsRepository.todoRemoteFile;
     String? archiveFile = _settingsRepository.archiveRemoteFile;
-    logger.i('Todo and Done files are not set');
     if (todoFile == null && archiveFile == null) {
+      logger.i('Todo and Done files are not set');
       return (null, null);
     }
 

@@ -34,6 +34,7 @@ Future<void> main() async {
 Future<ProviderContainer> _initContainer() async {
   final container = ProviderContainer();
   await container.read(settingsRepositoryProvider.future);
+  //TODO: move to initState of the TasksPage
   final dbProvider = container.read(dropboxAuthRepositoryProvider);
   if (dbProvider.isAuthorized) {
     await dbProvider.login();
