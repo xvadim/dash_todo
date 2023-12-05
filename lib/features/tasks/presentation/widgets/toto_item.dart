@@ -51,6 +51,8 @@ class TodoItem extends ConsumerWidget {
       ),
       child: Container(
         decoration: BoxDecoration(
+          //TODO: create themes
+          color: Colors.grey.shade200,
           border: Border(
             top: BorderSide(color: Colors.grey.shade600),
             bottom: BorderSide(color: Colors.grey.shade600),
@@ -119,6 +121,6 @@ Color _priorityColor(String priority) => switch (priority) {
       'D' => Colors.green,
       'E' => Colors.blue,
       'F' => Colors.deepPurple,
-      '' => Colors.grey.shade300,
-      _ => Colors.grey,
+      '' => Colors.grey.shade400,
+      _ => Colors.grey.shade600,
     };
