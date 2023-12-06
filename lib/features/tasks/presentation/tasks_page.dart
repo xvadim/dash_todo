@@ -67,7 +67,12 @@ class TasksPage extends ConsumerWidget {
     _MenuItem item,
   ) async {
     final taskController = ref.read(tasksControllerProvider.notifier);
-    taskController.downloadTasks();
+    switch (item) {
+      case _MenuItem.downloadTasks:
+        taskController.downloadTasks();
+      case _MenuItem.uploadTasks:
+        taskController.uploadTasks();
+    }
   }
 }
 

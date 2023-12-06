@@ -17,9 +17,33 @@ class TasksRepository {
     logger.d('Import from $todoFileName');
     final Directory docDirectory = await getApplicationDocumentsDirectory();
     String localFileName = _localTodoFile(docDirectory);
-    await _moveFile(todoFileName, localFileName);
+    await _copyFile(
+      todoFileName,
+      localFileName,
+      deleteOrigin: true,
+    );
     localFileName = _localDoneFile(docDirectory);
-    await _moveFile(archiveFileName, localFileName);
+    await _copyFile(
+      archiveFileName,
+      localFileName,
+      deleteOrigin: true,
+    );
+  }
+
+  // Returns (todoFileName, archiveFileName)
+  Future<(String, String)> exportTasks() async {
+    final Directory tempDir = await getTemporaryDirectory();
+    final todoFile = '${tempDir.path}/todo.txt';
+    final archiveFile = '${tempDir.path}/done.txt';
+
+    final Directory docDirectory = await getApplicationDocumentsDirectory();
+    String localFileName = _localTodoFile(docDirectory);
+    await _copyFile(localFileName, todoFile);
+
+    localFileName = _localDoneFile(docDirectory);
+    await _copyFile(localFileName, archiveFile);
+
+    return (todoFile, archiveFile);
   }
 
   Future<Todos> loadTodos() async {
@@ -50,7 +74,11 @@ class TasksRepository {
     return Todos(tasks: _tasks, projects: _projects);
   }
 
-  Future<void> _moveFile(String origName, String destName) async {
+  Future<void> _copyFile(
+    String origName,
+    String destName, {
+    bool deleteOrigin = false,
+  }) async {
     logger.d('Copy $origName to $destName');
     final origFile = File(origName);
     if (!origFile.existsSync()) {
@@ -58,7 +86,9 @@ class TasksRepository {
       return;
     }
     await origFile.copy(destName);
-    await origFile.delete();
+    if (deleteOrigin) {
+      await origFile.delete();
+    }
   }
 
   String _localTodoFile(Directory directory) => '${directory.path}/todo.txt';

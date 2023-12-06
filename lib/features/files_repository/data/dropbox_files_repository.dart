@@ -40,6 +40,22 @@ class DropboxFilesRepository {
     return (localTodoFile, localArchiveFile);
   }
 
+  Future<void> uploadTasks({
+    required String localTodoFile,
+    required String localArchiveFile,
+  }) async {
+    String? todoFile = _settingsRepository.todoRemoteFile;
+    String? archiveFile = _settingsRepository.archiveRemoteFile;
+    if (todoFile == null && archiveFile == null) {
+      logger.i('Todo and Done files are not set');
+    }
+
+    print('UPLOAD TO DB: $todoFile -- $archiveFile');
+
+    await Dropbox.upload(localTodoFile, todoFile!);
+    await Dropbox.upload(localArchiveFile, archiveFile!);
+  }
+
   final SettingsRepository _settingsRepository;
 }
 

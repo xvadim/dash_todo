@@ -22,6 +22,12 @@ class TasksController extends _$TasksController {
     state = await AsyncValue.guard(() => _downloadTasks());
   }
 
+  //TODO: consider a special controller for upload
+  Future<void> uploadTasks() async {
+    //TODO: notify about upload result
+    await _uploadTasks();
+  }
+
   Future<Todos> _downloadTasks() async {
     final dropboxFilesRepo = ref.read(dropboxFilesRepositoryProvider);
     String? todoFile;
@@ -39,6 +45,17 @@ class TasksController extends _$TasksController {
     );
 
     return await tasksRepo.loadTodos();
+  }
+
+  Future<void> _uploadTasks() async {
+    final tasksRepo = ref.read(tasksRepositoryProvider);
+    final (todoFile, archiveFile) = await tasksRepo.exportTasks();
+    print('UPLOAD: $todoFile $archiveFile');
+    final dropboxFilesRepo = ref.read(dropboxFilesRepositoryProvider);
+    await dropboxFilesRepo.uploadTasks(
+      localTodoFile: todoFile,
+      localArchiveFile: archiveFile,
+    );
   }
 }
 
