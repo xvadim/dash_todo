@@ -73,14 +73,6 @@ AsyncValue<Todos> filteredTasks(FilteredTasksRef ref) {
           )
           .toList();
     }
-    /*
-    List<Task> tasks = filter.project == null
-        ? todos.tasks
-        : todos.tasks
-            .where((t) => t.projects.contains(filter.project))
-            .toList();
-
-     */
     //TODO: process categories
     return AsyncData(todos.copyWith(tasks: tasks));
   } else {
