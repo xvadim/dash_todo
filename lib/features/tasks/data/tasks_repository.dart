@@ -17,9 +17,9 @@ class TasksRepository {
     logger.d('Import from $todoFileName');
     final Directory docDirectory = await getApplicationDocumentsDirectory();
     String localFileName = _localTodoFile(docDirectory);
-    await _copyFile(todoFileName, localFileName);
+    await _moveFile(todoFileName, localFileName);
     localFileName = _localDoneFile(docDirectory);
-    await _copyFile(archiveFileName, localFileName);
+    await _moveFile(archiveFileName, localFileName);
   }
 
   Future<Todos> loadTodos() async {
@@ -50,16 +50,15 @@ class TasksRepository {
     return Todos(tasks: _tasks, projects: _projects);
   }
 
-  Future<void> _copyFile(String origName, String destName) async {
+  Future<void> _moveFile(String origName, String destName) async {
     logger.d('Copy $origName to $destName');
     final origFile = File(origName);
     if (!origFile.existsSync()) {
       logger.i("File $origName doesn't exists");
       return;
     }
-    final destFile = File(destName);
-    String content = await origFile.readAsString();
-    await destFile.writeAsString(content, flush: true);
+    await origFile.copy(destName);
+    await origFile.delete();
   }
 
   String _localTodoFile(Directory directory) => '${directory.path}/todo.txt';
