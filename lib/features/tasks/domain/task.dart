@@ -71,8 +71,7 @@ extension TaskEx on Task {
     }
     final buffer = StringBuffer();
     if (isCompleted) {
-      buffer.write('x');
-      buffer.write(' ');
+      buffer.write('x ');
     }
     if (priority.isNotEmpty) {
       buffer.write('($priority) ');
@@ -84,13 +83,28 @@ extension TaskEx on Task {
       buffer.write(_dateFormatter.format(creationDate!));
     }
     buffer.write(text);
+    /*
     if (projects.isNotEmpty || contexts.isNotEmpty) {
       buffer.write(' ');
     }
     buffer.writeAll(projects.map((p) => '+$p'), ' ');
     if (contexts.isNotEmpty) buffer.write(' ');
     buffer.writeAll(contexts.map((c) => '@$c'), ' ');
+
+     */
     return buffer.toString();
+  }
+
+  Task complete() => copyWith(
+        isCompleted: true,
+        priority: '',
+        completionDate: DateTime.now(),
+        rawString: '',
+      );
+
+  //TODO: compare parts
+  int compareTo(Task other) {
+    return rawString.compareTo(other.rawString);
   }
 }
 

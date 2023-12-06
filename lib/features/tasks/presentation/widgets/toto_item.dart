@@ -22,7 +22,10 @@ class TodoItem extends ConsumerWidget {
         motion: const DrawerMotion(),
         children: [
           SlidableAction(
-            onPressed: (_) => {},
+            onPressed: (_) async {
+              final taskController = ref.read(tasksControllerProvider.notifier);
+              await taskController.completeTask(item);
+            },
             backgroundColor: Colors.green,
             foregroundColor: Colors.white,
             icon: Icons.check,

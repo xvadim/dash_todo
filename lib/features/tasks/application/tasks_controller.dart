@@ -28,6 +28,18 @@ class TasksController extends _$TasksController {
     await _uploadTasks();
   }
 
+  Future<void> completeTask(Task task) async {
+    final tasksRepo = ref.read(tasksRepositoryProvider);
+    final tasks = await tasksRepo.completeTask(task);
+    final prevTodos = state.valueOrNull;
+    if (prevTodos != null) {
+      final newTodos = prevTodos.copyWith(tasks: tasks);
+      state = await AsyncValue.guard(() async {
+        return newTodos;
+      });
+    }
+  }
+
   Future<Todos> _downloadTasks() async {
     final dropboxFilesRepo = ref.read(dropboxFilesRepositoryProvider);
     String? todoFile;
@@ -47,10 +59,17 @@ class TasksController extends _$TasksController {
     return await tasksRepo.loadTodos();
   }
 
+  Future<Todos> _loadTodos() async {
+    final tasksRepo = ref.read(tasksRepositoryProvider);
+    final todos = await tasksRepo.loadTodos();
+    final tasks = List<Task>.from(todos.tasks, growable: false);
+    tasks.sort((a, b) => a.rawString.compareTo(b.rawString));
+    return todos.copyWith(tasks: tasks);
+  }
+
   Future<void> _uploadTasks() async {
     final tasksRepo = ref.read(tasksRepositoryProvider);
     final (todoFile, archiveFile) = await tasksRepo.exportTasks();
-    print('UPLOAD: $todoFile $archiveFile');
     final dropboxFilesRepo = ref.read(dropboxFilesRepositoryProvider);
     await dropboxFilesRepo.uploadTasks(
       localTodoFile: todoFile,
@@ -81,7 +100,7 @@ AsyncValue<Todos> filteredTasks(FilteredTasksRef ref) {
   if (state case AsyncData(value: final todos)) {
     late List<Task> tasks;
     if (filter.project == null || !filter.project!.startsWith('+')) {
-      tasks = todos.tasks;
+      tasks = List<Task>.from(todos.tasks, growable: false);
     } else {
       final project = filter.project!.substring(1);
       tasks = todos.tasks
@@ -90,6 +109,7 @@ AsyncValue<Todos> filteredTasks(FilteredTasksRef ref) {
           )
           .toList();
     }
+    tasks.sort((a, b) => a.compareTo(b));
     //TODO: process categories
     return AsyncData(todos.copyWith(tasks: tasks));
   } else {

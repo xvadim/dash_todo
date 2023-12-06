@@ -64,14 +64,24 @@ class TasksRepository {
         )
         .toList();
     //temporary
-    tasks.sort((a, b) => a.rawString.compareTo(b.rawString));
+    // tasks.sort((a, b) => a.rawString.compareTo(b.rawString));
 
     _tasks.clear();
     _tasks.addAll(tasks);
 
     _updateProjects();
 
-    return Todos(tasks: _tasks, projects: _projects);
+    return Todos(tasks: tasks, projects: _projects);
+  }
+
+  Future<List<Task>> completeTask(Task task) async {
+    _tasks = _tasks.where((t) => t.id != task.id).toList();
+    final completedTask = task.complete();
+    await _archiveTask(completedTask);
+    //TODO: save only when needed
+    await _saveTasks();
+
+    return [..._tasks];
   }
 
   Future<void> _copyFile(
@@ -91,10 +101,24 @@ class TasksRepository {
     }
   }
 
+  Future<void> _archiveTask(Task task) async {
+    final Directory docDirectory = await getApplicationDocumentsDirectory();
+    final doneFile = File(_localDoneFile(docDirectory));
+    final taskStr = task.toRawString();
+    await doneFile.writeAsString('$taskStr\n', mode: FileMode.append);
+  }
+
+  Future<void> _saveTasks() async {
+    final Directory docDirectory = await getApplicationDocumentsDirectory();
+    final todoFile = File(_localTodoFile(docDirectory));
+    final tasksStr = _tasks.map((t) => t.toRawString()).join('\n');
+    await todoFile.writeAsString('$tasksStr\n');
+  }
+
   String _localTodoFile(Directory directory) => '${directory.path}/todo.txt';
   String _localDoneFile(Directory directory) => '${directory.path}/done.txt';
 
-  final List<Task> _tasks = [];
+  List<Task> _tasks = [];
   final Set<String> _projects = {};
 
   void _updateProjects() {
