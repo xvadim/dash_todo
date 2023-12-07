@@ -4,6 +4,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 
 import '../../../../common/build_context_extension.dart';
 import '../../application/tasks_controller.dart';
+import '../../domain/task.dart';
 
 const priorityMarkerWidth = 4.0;
 
@@ -17,15 +18,13 @@ class TodoItem extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final item = ref.watch(currentTask);
     final priorityColor = _priorityColor(item.priority);
+
     return Slidable(
       startActionPane: ActionPane(
         motion: const DrawerMotion(),
         children: [
           SlidableAction(
-            onPressed: (_) async {
-              final taskController = ref.read(tasksControllerProvider.notifier);
-              await taskController.completeTask(item);
-            },
+            onPressed: (_) async => _completeTask(ref, item),
             backgroundColor: Colors.green,
             foregroundColor: Colors.white,
             icon: Icons.check,
@@ -44,7 +43,7 @@ class TodoItem extends ConsumerWidget {
         motion: const DrawerMotion(),
         children: [
           SlidableAction(
-            onPressed: (_) => {},
+            onPressed: (_) async => _deleteTask(ref, item),
             backgroundColor: Colors.red,
             foregroundColor: Colors.white,
             icon: Icons.delete,
@@ -89,6 +88,17 @@ class TodoItem extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _completeTask(WidgetRef ref, Task task) async {
+    final taskController = ref.read(tasksControllerProvider.notifier);
+    await taskController.completeTask(task);
+  }
+
+  Future<void> _deleteTask(WidgetRef ref, Task task) async {
+    //TODO: confirmation & undo
+    final taskController = ref.read(tasksControllerProvider.notifier);
+    await taskController.deleteTask(task);
   }
 }
 

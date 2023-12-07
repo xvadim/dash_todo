@@ -84,6 +84,14 @@ class TasksRepository {
     return [..._tasks];
   }
 
+  Future<List<Task>> deleteTask(Task task) async {
+    _tasks = _tasks.where((t) => t.id != task.id).toList();
+    //TODO: save only when needed
+    await _saveTasks();
+
+    return [..._tasks];
+  }
+
   Future<void> _copyFile(
     String origName,
     String destName, {

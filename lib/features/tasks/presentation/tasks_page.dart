@@ -108,6 +108,7 @@ class _TasksListViewState extends ConsumerState<_TasksListView> {
             child: CustomScrollView(
               cacheExtent: 0,
               slivers: [
+                //TODO: use AnimatedList?
                 SliverList.separated(
                   itemCount: todos.tasks.length,
                   itemBuilder: (_, idx) => ValueListenableBuilder(

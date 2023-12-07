@@ -31,6 +31,16 @@ class TasksController extends _$TasksController {
   Future<void> completeTask(Task task) async {
     final tasksRepo = ref.read(tasksRepositoryProvider);
     final tasks = await tasksRepo.completeTask(task);
+    await _updateState(tasks);
+  }
+
+  Future<void> deleteTask(Task task) async {
+    final tasksRepo = ref.read(tasksRepositoryProvider);
+    final tasks = await tasksRepo.deleteTask(task);
+    await _updateState(tasks);
+  }
+
+  Future<void> _updateState(List<Task> tasks) async {
     final prevTodos = state.valueOrNull;
     if (prevTodos != null) {
       final newTodos = prevTodos.copyWith(tasks: tasks);
