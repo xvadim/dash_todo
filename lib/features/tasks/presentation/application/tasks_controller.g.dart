@@ -6,7 +6,7 @@ part of 'tasks_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$projectsHash() => r'a904d7d62ccd8eebe3af2971982fa48b34010297';
+String _$projectsHash() => r'59cbe6b6c41d24e4c1e527e816ff0cbf0315c01f';
 
 /// See also [projects].
 @ProviderFor(projects)
@@ -20,7 +20,7 @@ final projectsProvider = AutoDisposeFutureProvider<Set<String>>.internal(
 );
 
 typedef ProjectsRef = AutoDisposeFutureProviderRef<Set<String>>;
-String _$filteredTasksHash() => r'f7c584e3167dbf2c9e5d01b0e749e078859e97e3';
+String _$filteredTasksHash() => r'23c480c869b452e3bf6aa103dc04133264c3a0be';
 
 /// See also [filteredTasks].
 @ProviderFor(filteredTasks)
@@ -35,7 +35,7 @@ final filteredTasksProvider = AutoDisposeProvider<AsyncValue<Todos>>.internal(
 );
 
 typedef FilteredTasksRef = AutoDisposeProviderRef<AsyncValue<Todos>>;
-String _$tasksControllerHash() => r'2b0504767c68faf3f3f44a3d87cf7e0516042aa3';
+String _$tasksControllerHash() => r'96ada6d59011eb76708a9c784279a70856cddef2';
 
 /// See also [TasksController].
 @ProviderFor(TasksController)

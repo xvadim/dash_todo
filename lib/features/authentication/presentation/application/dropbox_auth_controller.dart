@@ -1,6 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../data/dropbox_auth_repository.dart';
+import '../../data/dropbox_auth_repository.dart';
 
 part 'dropbox_auth_controller.g.dart';
 

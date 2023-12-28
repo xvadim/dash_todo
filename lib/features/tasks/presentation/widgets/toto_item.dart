@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 import '../../../../common/build_context_extension.dart';
-import '../../application/tasks_controller.dart';
+import '../application/tasks_controller.dart';
 import '../../domain/task.dart';
 
 const priorityMarkerWidth = 4.0;

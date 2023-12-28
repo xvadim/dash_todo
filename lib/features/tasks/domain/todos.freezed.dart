@@ -127,7 +127,7 @@ class _$TodosImpl implements _Todos {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TodosImpl &&

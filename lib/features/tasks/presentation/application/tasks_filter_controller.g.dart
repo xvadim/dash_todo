@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'tasks_filter_contoller.dart';
+part of 'tasks_filter_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator

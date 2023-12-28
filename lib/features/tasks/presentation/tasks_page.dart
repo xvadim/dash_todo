@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../common/sizes.dart';
 import '../../../common_widgets/app_drawer.dart';
-import '../application/tasks_controller.dart';
+import 'application/tasks_controller.dart';
 import 'widgets/list_item_animated_wrapper.dart';
 import 'widgets/project_chooser.dart';
 import 'widgets/toto_item.dart';

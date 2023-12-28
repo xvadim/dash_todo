@@ -1,8 +1,8 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../domain/tasks_filter.dart';
+import '../../domain/tasks_filter.dart';
 
-part 'tasks_filter_contoller.g.dart';
+part 'tasks_filter_controller.g.dart';
 
 @riverpod
 class TasksFilterController extends _$TasksFilterController {

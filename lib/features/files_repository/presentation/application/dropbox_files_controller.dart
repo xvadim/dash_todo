@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../data/dropbox_files_repository.dart';
-import '../domain/dropbox_item.dart';
+import '../../data/dropbox_files_repository.dart';
+import '../../domain/dropbox_item.dart';
 
 part 'dropbox_files_controller.g.dart';
 

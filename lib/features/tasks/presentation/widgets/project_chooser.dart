@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../application/tasks_controller.dart';
-import '../../application/tasks_filter_contoller.dart';
+import '../application/tasks_controller.dart';
+import '../application/tasks_filter_controller.dart';
 
 class ProjectChooser extends ConsumerWidget {
   const ProjectChooser({super.key});

@@ -5,7 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 import '../domain/dropbox_item.dart';
-import 'dropbox_files_controller.dart';
+import 'application/dropbox_files_controller.dart';
 
 class DropboxFileSelectorPage extends StatelessWidget {
   const DropboxFileSelectorPage({super.key});

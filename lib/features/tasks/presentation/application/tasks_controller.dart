@@ -1,11 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../files_repository/data/dropbox_files_repository.dart';
-import '../data/tasks_repository.dart';
-import '../domain/task.dart';
-import '../domain/todos.dart';
-import 'tasks_filter_contoller.dart';
+import '../../../files_repository/data/dropbox_files_repository.dart';
+import '../../data/tasks_repository.dart';
+import '../../domain/task.dart';
+import '../../domain/todos.dart';
+import 'tasks_filter_controller.dart';
 
 part 'tasks_controller.g.dart';
 
