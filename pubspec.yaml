@@ -36,26 +36,26 @@ dependencies:
   dropbox_client: ^1.1.1
   easy_localization: ^3.0.3
   envied: ^0.5.2
-  flutter_riverpod: ^2.4.8
+  flutter_riverpod: ^2.4.9
   flutter_slidable: ^3.0.1
   font_awesome_flutter: ^10.6.0
   freezed_annotation: ^2.4.1
-  go_router: ^12.1.1
+  go_router: ^13.0.0
   intl: ^0.18.1
   logger: ^2.0.2+1
   path_provider: ^2.1.1
   shared_preferences: ^2.2.2
-  riverpod_annotation: ^2.3.2
+  riverpod_annotation: ^2.3.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  build_runner: ^2.4.6
+  build_runner: ^2.4.7
   envied_generator: ^0.5.2
-  freezed: ^2.4.5
-  riverpod_generator: ^2.3.8
-  riverpod_lint: ^2.3.6
+  freezed: ^2.4.6
+  riverpod_generator: ^2.3.9
+  riverpod_lint: ^2.3.7
   custom_lint: ^0.5.7
 
   # The "flutter_lints" package below contains a set of recommended lints to
