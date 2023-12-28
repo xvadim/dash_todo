@@ -54,11 +54,13 @@ class TodoItem extends ConsumerWidget {
       child: Container(
         decoration: BoxDecoration(
           //TODO: create themes
-          color: Colors.grey.shade200,
+          color: item.priority.isEmpty
+              ? priorityColor.shade200
+              : priorityColor.shade100,
           border: Border(
-            top: BorderSide(color: Colors.grey.shade600),
-            bottom: BorderSide(color: Colors.grey.shade600),
-            right: BorderSide(color: Colors.grey.shade600),
+            top: BorderSide(color: Colors.grey.shade700),
+            bottom: BorderSide(color: Colors.grey.shade700),
+            right: BorderSide(color: Colors.grey.shade700),
           ),
           borderRadius: const BorderRadius.only(
             topRight: Radius.circular(8),
@@ -69,7 +71,9 @@ class TodoItem extends ConsumerWidget {
         child: Row(
           children: [
             Container(
-              color: priorityColor,
+              color: item.priority.isEmpty
+                  ? priorityColor.shade300
+                  : priorityColor,
               width: priorityMarkerWidth,
             ),
             Padding(
@@ -127,13 +131,13 @@ class _PriorityIndicator extends StatelessWidget {
   }
 }
 
-Color _priorityColor(String priority) => switch (priority) {
+MaterialColor _priorityColor(String priority) => switch (priority) {
       'A' => Colors.red,
       'B' => Colors.orange,
       'C' => Colors.yellow,
       'D' => Colors.green,
       'E' => Colors.blue,
       'F' => Colors.deepPurple,
-      '' => Colors.grey.shade400,
-      _ => Colors.grey.shade600,
+      '' => Colors.grey,
+      _ => Colors.grey,
     };

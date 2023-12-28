@@ -67,6 +67,8 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
+flutter_gen:
+  output: lib/assets
 
 # The following section is specific to Flutter packages.
 flutter:
@@ -80,6 +82,8 @@ flutter:
   assets:
     - assets/languages/en.json
     - assets/languages/uk.json
+
+    - assets/images/logo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

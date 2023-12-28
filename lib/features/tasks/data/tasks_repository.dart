@@ -58,13 +58,13 @@ class TasksRepository {
     }
 
     final todos = await todoFile.readAsLines();
-    final List<Task> tasks = todos.indexed
+    final List<Task> tasks = todos
+        .where((i) => i.isNotEmpty)
+        .indexed
         .map(
           (e) => Task.fromString(e.$1, e.$2),
         )
         .toList();
-    //temporary
-    // tasks.sort((a, b) => a.rawString.compareTo(b.rawString));
 
     _tasks.clear();
     _tasks.addAll(tasks);

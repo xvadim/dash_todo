@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../../../assets/assets.gen.dart';
 import '../../../common/build_context_extension.dart';
 import '../../../common/sizes.dart';
 import '../../../common/ui_utils.dart';
 import 'dropbox_auth_controller.dart';
+import 'widgets/or_separator.dart';
 
 class SignInPage extends ConsumerStatefulWidget {
   const SignInPage({super.key});
@@ -33,7 +35,9 @@ class _SignInPageState extends ConsumerState<SignInPage> {
 
   @override
   Widget build(BuildContext context) {
-    // final state = ref.watch(dropboxAuthControllerProvider);
+    final screenSize = MediaQuery.sizeOf(context);
+    final separatorWidth = screenSize.width / 3;
+    final logoSize = screenSize.width / 4;
     return SafeArea(
       child: Scaffold(
         body: Center(
@@ -41,26 +45,52 @@ class _SignInPageState extends ConsumerState<SignInPage> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                'signin.title'.tr(),
+                'app.title'.tr(),
                 style: context.textTheme.headlineLarge,
               ),
-              _SignInButton(
-                icon: const FaIcon(
-                  FontAwesomeIcons.dropbox,
-                  color: Colors.blue,
-                ),
-                title: 'signin.signinDropbox'.tr(),
-                subtitle: 'signin.syncDropbox'.tr(),
-                onPressed: () async => _authorizeDropbox(),
+              Assets.images.logo.image(
+                width: logoSize,
+                height: logoSize,
+                fit: BoxFit.scaleDown,
               ),
-              _SignInButton(
-                icon: const FaIcon(
-                  FontAwesomeIcons.file,
-                  color: Colors.black,
+              SizedBox(
+                height: screenSize.height * 0.55,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      'signin.title'.tr(),
+                      style: context.textTheme.headlineSmall,
+                    ),
+                    _SignInButton(
+                      icon: const FaIcon(
+                        FontAwesomeIcons.dropbox,
+                        color: Colors.blue,
+                      ),
+                      title: 'signin.signinDropbox'.tr(),
+                      subtitle: 'signin.syncDropbox'.tr(),
+                      onPressed: () async => _authorizeDropbox(),
+                    ),
+                    OrSeparator(width: separatorWidth),
+                    _SignInButton(
+                      icon: const FaIcon(
+                        FontAwesomeIcons.file,
+                        color: Colors.black,
+                      ),
+                      title: 'signin.signinLocally'.tr(),
+                      subtitle: 'signin.syncLocally'.tr(),
+                      onPressed: () => showSnackBar(
+                        context,
+                        'Not implemented yet',
+                      ),
+                    ),
+                    OrSeparator(width: separatorWidth),
+                    TextButton(
+                      onPressed: () {},
+                      child: Text('signin.withoutSync'.tr()),
+                    ),
+                  ],
                 ),
-                title: 'signin.signinLocally'.tr(),
-                subtitle: 'signin.syncLocally'.tr(),
-                onPressed: () => showSnackBar(context, 'Not implemented yet'),
               ),
             ],
           ),

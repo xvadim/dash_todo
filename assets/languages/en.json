@@ -12,7 +12,9 @@
     "signinDropbox": "Sign in with Dropbox",
     "signinLocally": "Sign in locally",
     "syncDropbox": "for Dropbox sync",
-    "syncLocally": "for files on this device"
+    "syncLocally": "for files on this device",
+    "or": "or",
+    "withoutSync": "Try without tasks sync"
   },
   "settings": {
     "dropboxFilesSetupTitle": "Select files in Dropbox",
