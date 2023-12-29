@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'dash_todo_app.dart';
 import 'features/authentication/data/dropbox_auth_repository.dart';
+import 'features/authentication/presentation/application/app_user_controller.dart';
 import 'features/settings/data/settings_repository.dart';
 import 'helpers/language_helper.dart';
 
@@ -39,6 +40,7 @@ Future<ProviderContainer> _initContainer() async {
   if (dbProvider.isAuthorized) {
     await dbProvider.login();
   }
-  await dbProvider.loadUser();
+  final appUserCtr = container.read(appUserControllerProvider);
+  await appUserCtr.loadUser();
   return container;
 }

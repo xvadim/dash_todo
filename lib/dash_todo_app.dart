@@ -18,7 +18,6 @@ class DashTodoApp extends ConsumerWidget {
       locale: context.locale,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
-        // useMaterial3: true,
       ),
       routerConfig: goRouter,
     );

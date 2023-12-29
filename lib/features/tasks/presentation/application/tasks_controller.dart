@@ -109,6 +109,7 @@ Future<Set<String>> projects(ProjectsRef ref) async {
 @riverpod
 AsyncValue<Todos> filteredTasks(FilteredTasksRef ref) {
   final state = ref.watch(tasksControllerProvider);
+  // ignore: avoid_manual_providers_as_generated_provider_dependency
   final filter = ref.watch(tasksFilterControllerProvider);
   if (state case AsyncData(value: final todos)) {
     late List<Task> tasks;

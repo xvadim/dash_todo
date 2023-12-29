@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../features/authentication/data/dropbox_auth_repository.dart';
+import '../features/authentication/presentation/application/app_user_controller.dart';
 import '../features/authentication/presentation/sign_in_page.dart';
 import '../features/files/presentation/dropbox_file_selector_page.dart';
 import '../features/settings/presentation/files_setup_page.dart';
@@ -27,15 +27,15 @@ const _dropboxFilesSelector = 'dropboxFilesSelector';
 @riverpod
 GoRouter goRouter(GoRouterRef ref) {
   //TODO: support local syncing & auth
-  final dropboxAuthRepository = ref.watch(dropboxAuthRepositoryProvider);
+  // ignore: avoid_manual_providers_as_generated_provider_dependency
+  final appUserCtr = ref.read(appUserControllerProvider);
   return GoRouter(
     initialLocation: _tasksPath,
     navigatorKey: _rootNavigatorKey,
     debugLogDiagnostics: true,
     redirect: (context, state) {
       final path = state.uri.path;
-      final isAuthorized = dropboxAuthRepository.isAuthorized;
-      if (isAuthorized) {
+      if (appUserCtr.isAuthorized) {
         if (path.startsWith(_signInPath)) {
           return _filesSetup;
         }
@@ -46,7 +46,7 @@ GoRouter goRouter(GoRouterRef ref) {
       }
       return null;
     },
-    refreshListenable: dropboxAuthRepository.appUser,
+    refreshListenable: appUserCtr.appUser,
     routes: [
       GoRoute(
         path: _signInPath,

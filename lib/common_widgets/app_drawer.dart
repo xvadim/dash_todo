@@ -9,7 +9,7 @@ import '../common/consts.dart';
 import '../common/sizes.dart';
 import '../features/authentication/data/dropbox_auth_repository.dart';
 import '../features/authentication/domain/app_user.dart';
-import '../features/settings/data/settings_repository.dart';
+import '../features/authentication/presentation/application/app_user_controller.dart';
 import '../routing/app_router.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -30,10 +30,9 @@ class AppDrawer extends StatelessWidget {
               leading: const Icon(Icons.logout),
               title: Text('menu.logout'.tr()),
               onTap: () async {
-                final settingsRepos =
-                    ref.read(settingsRepositoryProvider).requireValue;
                 final authRepos = ref.read(dropboxAuthRepositoryProvider);
-                await settingsRepos.removeAppUser();
+                final appUserCtr = ref.read(appUserControllerProvider);
+                await appUserCtr.logout();
                 await authRepos.logout();
               },
             );
@@ -68,8 +67,8 @@ class _AppUserHeader extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final dropboxAuthRepository = ref.watch(dropboxAuthRepositoryProvider);
-    final AppUser? appUser = dropboxAuthRepository.appUser.value;
+    final appUserCtr = ref.watch(appUserControllerProvider);
+    final AppUser? appUser = appUserCtr.appUser.value;
     if (appUser == null) {
       return const Icon(Icons.person);
     }

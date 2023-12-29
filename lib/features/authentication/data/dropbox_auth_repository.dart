@@ -1,10 +1,8 @@
 import 'package:dropbox_client/dropbox_client.dart';
-import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../common/env.dart';
 import '../../settings/data/settings_repository.dart';
-import '../domain/app_user.dart';
 
 part 'dropbox_auth_repository.g.dart';
 
@@ -12,7 +10,9 @@ class DropboxAuthRepository {
   DropboxAuthRepository(this._settingsRepository);
 
   bool get isAuthorized => _settingsRepository.dropboxCredentials() != null;
-  ValueNotifier<AppUser?> get appUser => _appUser;
+  String? get userName => _userName;
+  String? get userEmail => _userEmail;
+  String? get userAvatarUrl => _userAvatarUrl;
 
   Future<void> authorize() async {
     if (!_isInitialized) {
@@ -42,20 +42,22 @@ class DropboxAuthRepository {
       testCredentials = await Dropbox.getCredentials();
     }
 
-    await loadUser(forceRefresh: true);
+    await _loadDropboxAccount();
 
     return testCredentials != null;
   }
 
   Future<void> logout() async {
     await _settingsRepository.unlinkDropbox();
-    _appUser.value = null;
+    // doesn't return ??
     await Dropbox.unlink();
   }
 
   final SettingsRepository _settingsRepository;
   bool _isInitialized = false;
-  final ValueNotifier<AppUser?> _appUser = ValueNotifier(null);
+  String? _userName;
+  String? _userEmail;
+  String? _userAvatarUrl;
 
   static const String _dropboxClientId = 'dash-todo-dropbox';
 
@@ -69,42 +71,17 @@ class DropboxAuthRepository {
     _isInitialized = true;
   }
 
-  Future<void> loadUser({bool forceRefresh = false}) async {
-    String userName = _settingsRepository.appUserName;
-    if (userName.isEmpty) {
-      if (forceRefresh) {
-        await _loadDropboxAccount();
-        userName = _settingsRepository.appUserName;
-      } else {
-        return;
-      }
-    }
-
-    _appUser.value = AppUser(
-      name: userName,
-      email: _settingsRepository.appUserEmail,
-      avatarUrl: _settingsRepository.appUserAvatarUrl,
-    );
-  }
-
   Future<void> _loadDropboxAccount() async {
-    String? userName;
-    String? userEmail;
-    String? userAvatarUrl;
-    final account = await Dropbox.getCurrentAccount(forceCredentialsUse: true);
+    final account = await Dropbox.getCurrentAccount(
+      forceCredentialsUse: true,
+    );
     if (account != null) {
-      userName = account.name?.displayName;
-      userEmail = account.email;
-      userAvatarUrl = account.profilePhotoUrl;
+      _userName = account.name?.displayName;
+      _userEmail = account.email;
+      _userAvatarUrl = account.profilePhotoUrl;
     }
 
-    userName ??= await Dropbox.getAccountName();
-
-    await _settingsRepository.saveAppUserInfo(
-      appUserName: userName ?? '',
-      appUserEmail: userEmail,
-      appUserAvatarUrl: userAvatarUrl,
-    );
+    _userName ??= await Dropbox.getAccountName();
   }
 }
 

@@ -35,7 +35,7 @@ final filteredTasksProvider = AutoDisposeProvider<AsyncValue<Todos>>.internal(
 );
 
 typedef FilteredTasksRef = AutoDisposeProviderRef<AsyncValue<Todos>>;
-String _$tasksControllerHash() => r'96ada6d59011eb76708a9c784279a70856cddef2';
+String _$tasksControllerHash() => r'40ec21b5b8d03aa63d896d70d728edad9e0d7c05';
 
 /// See also [TasksController].
 @ProviderFor(TasksController)
