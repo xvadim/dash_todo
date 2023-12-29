@@ -4,7 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../features/authentication/data/dropbox_auth_repository.dart';
 import '../features/authentication/presentation/sign_in_page.dart';
-import '../features/files_repository/presentation/dropbox_file_selector_page.dart';
+import '../features/files/presentation/dropbox_file_selector_page.dart';
 import '../features/settings/presentation/files_setup_page.dart';
 import '../features/tasks/presentation/tasks_page.dart';
 

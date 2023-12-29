@@ -1,14 +1,14 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../data/dropbox_files_repository.dart';
-import '../../domain/dropbox_item.dart';
+import '../../domain/file_item.dart';
 
 part 'dropbox_files_controller.g.dart';
 
 final class ListFolderResult {
   ListFolderResult({required this.folder, required this.content});
   final String folder;
-  final List<DropboxItem> content;
+  final List<FileItem> content;
 }
 
 @riverpod

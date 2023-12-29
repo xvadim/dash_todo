@@ -7,14 +7,16 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../common/logger.dart';
 import '../../settings/data/settings_repository.dart';
 import '../domain/dropbox_item.dart';
+import '../domain/file_item.dart';
+import '../domain/repos/browseable_files_repository.dart';
 
 part 'dropbox_files_repository.g.dart';
 
-class DropboxFilesRepository {
+class DropboxFilesRepository implements BrowseableFilesRepository {
   DropboxFilesRepository(this._settingsRepository);
 
-  /// Returns folder/file list for path.
-  Future<List<DropboxItem>> listFolder([String folder = '']) async {
+  @override
+  Future<List<FileItem>> listFolder([String folder = '']) async {
     final List<Object?> result = await Dropbox.listFolder(folder);
 
     return result
@@ -22,7 +24,8 @@ class DropboxFilesRepository {
         .toList();
   }
 
-  Future<(String?, String?)> downloadTasks() async {
+  @override
+  Future<(String? todoFile, String? archiveFile)> downloadTasks() async {
     String? todoFile = _settingsRepository.todoRemoteFile;
     String? archiveFile = _settingsRepository.archiveRemoteFile;
     if (todoFile == null || archiveFile == null) {
@@ -40,6 +43,7 @@ class DropboxFilesRepository {
     return (localTodoFile, localArchiveFile);
   }
 
+  @override
   Future<void> uploadTasks({
     required String localTodoFile,
     required String localArchiveFile,

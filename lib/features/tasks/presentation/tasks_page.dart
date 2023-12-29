@@ -119,7 +119,7 @@ class _TasksListViewState extends ConsumerState<_TasksListView> {
                       ],
                       child: const TodoItem(),
                     ),
-                    builder: (context, ScrollDirection scrollDirection, child) {
+                    builder: (_, ScrollDirection scrollDirection, child) {
                       return ListItemAnimatedWrapper(
                         scrollDirection: scrollDirection,
                         child: child!,

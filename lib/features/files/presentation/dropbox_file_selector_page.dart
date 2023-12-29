@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
-import '../domain/dropbox_item.dart';
+import '../domain/file_item.dart';
 import 'application/dropbox_files_controller.dart';
 
 class DropboxFileSelectorPage extends StatelessWidget {
@@ -66,7 +66,7 @@ class DropboxFileSelector extends ConsumerWidget {
     WidgetRef ref,
     String folder,
     int index,
-    DropboxItem item,
+    FileItem item,
   ) async {
     if (item.isFile) {
       context.pop('$folder/${item.name}');
@@ -86,8 +86,8 @@ class _DropboxItemWidget extends StatelessWidget {
   });
 
   final int index;
-  final DropboxItem item;
-  final Function(int idx, DropboxItem item) onPressed;
+  final FileItem item;
+  final Function(int idx, FileItem item) onPressed;
 
   @override
   Widget build(BuildContext context) {
