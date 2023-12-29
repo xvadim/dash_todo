@@ -25,8 +25,8 @@ class DropboxFilesRepository {
   Future<(String?, String?)> downloadTasks() async {
     String? todoFile = _settingsRepository.todoRemoteFile;
     String? archiveFile = _settingsRepository.archiveRemoteFile;
-    if (todoFile == null && archiveFile == null) {
-      logger.i('Todo and Done files are not set');
+    if (todoFile == null || archiveFile == null) {
+      logger.i('Todo or Done files are not set');
       return (null, null);
     }
 
@@ -34,8 +34,8 @@ class DropboxFilesRepository {
     final localTodoFile = '${tempDir.path}/todo.txt';
     final localArchiveFile = '${tempDir.path}/done.txt';
 
-    await Dropbox.download(todoFile!, localTodoFile);
-    await Dropbox.download(archiveFile!, localArchiveFile);
+    await Dropbox.download(todoFile, localTodoFile);
+    await Dropbox.download(archiveFile, localArchiveFile);
 
     return (localTodoFile, localArchiveFile);
   }
@@ -46,11 +46,9 @@ class DropboxFilesRepository {
   }) async {
     String? todoFile = _settingsRepository.todoRemoteFile;
     String? archiveFile = _settingsRepository.archiveRemoteFile;
-    if (todoFile == null && archiveFile == null) {
-      logger.i('Todo and Done files are not set');
+    if (todoFile == null || archiveFile == null) {
+      logger.i('Todo or Done files are not set');
     }
-
-    print('UPLOAD TO DB: $todoFile -- $archiveFile');
 
     await Dropbox.upload(localTodoFile, todoFile!);
     await Dropbox.upload(localArchiveFile, archiveFile!);
@@ -59,8 +57,7 @@ class DropboxFilesRepository {
   final SettingsRepository _settingsRepository;
 }
 
-//TODO: do we need keepAlive?
-@Riverpod(keepAlive: true)
+@riverpod
 DropboxFilesRepository dropboxFilesRepository(DropboxFilesRepositoryRef ref) {
   return DropboxFilesRepository(
     ref.watch(settingsRepositoryProvider).requireValue,
