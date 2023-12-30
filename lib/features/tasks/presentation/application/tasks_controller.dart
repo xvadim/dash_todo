@@ -69,17 +69,6 @@ class TasksController extends _$TasksController {
     return await tasksRepo.loadTodos();
   }
 
-  /*
-  Future<Todos> _loadTodos() async {
-    final tasksRepo = ref.read(tasksRepositoryProvider);
-    final todos = await tasksRepo.loadTodos();
-    final tasks = List<Task>.from(todos.tasks, growable: false);
-    tasks.sort((a, b) => a.rawString.compareTo(b.rawString));
-    return todos.copyWith(tasks: tasks);
-  }
-
-   */
-
   Future<void> _uploadTasks() async {
     final tasksRepo = ref.read(tasksRepositoryProvider);
     final (todoFile, archiveFile) = await tasksRepo.exportTasks();

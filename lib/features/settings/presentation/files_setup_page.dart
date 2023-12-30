@@ -108,6 +108,7 @@ class _FilesSetupPageState extends ConsumerState<FilesSetupPage> {
         context.pop();
       } else {
         //It's a case after login to Dropbox and setup files
+        //TODO: force download
         context.goNamed(AppRoute.tasks.name);
       }
     }
