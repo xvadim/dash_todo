@@ -3,17 +3,23 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../common/env.dart';
 import '../../settings/data/settings_repository.dart';
+import '../domain/repos/authorizeable_auth_repository.dart';
 
 part 'dropbox_auth_repository.g.dart';
 
-class DropboxAuthRepository {
+class DropboxAuthRepository implements AuthorizableAuthRepository {
   DropboxAuthRepository(this._settingsRepository);
 
+  @override
   bool get isAuthorized => _settingsRepository.dropboxCredentials() != null;
+  @override
   String? get userName => _userName;
+  @override
   String? get userEmail => _userEmail;
+  @override
   String? get userAvatarUrl => _userAvatarUrl;
 
+  @override
   Future<void> authorize() async {
     if (!_isInitialized) {
       await _init();
@@ -21,6 +27,7 @@ class DropboxAuthRepository {
     await Dropbox.authorizePKCE();
   }
 
+  @override
   Future<bool> login() async {
     if (!_isInitialized) {
       await _init();
@@ -47,6 +54,7 @@ class DropboxAuthRepository {
     return testCredentials != null;
   }
 
+  @override
   Future<void> logout() async {
     await _settingsRepository.unlinkDropbox();
     // doesn't return ??
