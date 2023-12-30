@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../files/data/dropbox_files_repository.dart';
+import '../../../files/data/tutorial_files_repository.dart';
 import '../../data/tasks_repository.dart';
 import '../../domain/task.dart';
 import '../../domain/todos.dart';
@@ -51,10 +52,12 @@ class TasksController extends _$TasksController {
   }
 
   Future<Todos> _downloadTasks() async {
-    final dropboxFilesRepo = ref.read(dropboxFilesRepositoryProvider);
+    // final filesRepo = ref.read(dropboxFilesRepositoryProvider);
+    final filesRepo = ref.read(tutorialFilesRepositoryProvider);
+
     String? todoFile;
     String? archiveFile;
-    (todoFile, archiveFile) = await dropboxFilesRepo.downloadTasks();
+    (todoFile, archiveFile) = await filesRepo.downloadTasks();
     if (todoFile == null || archiveFile == null) {
       return const Todos(tasks: [], projects: {});
     }
