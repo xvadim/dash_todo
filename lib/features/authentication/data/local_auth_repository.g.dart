@@ -1,27 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'dropbox_auth_controller.dart';
+part of 'local_auth_repository.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$dropboxAuthControllerHash() =>
-    r'23768fd99b7360b28656dde9199d9cee643372f2';
+String _$tutorialAuthRepositoryHash() =>
+    r'460d72338b96067799eea9c50d6a901a4139c1c2';
 
-/// See also [DropboxAuthController].
-@ProviderFor(DropboxAuthController)
-final dropboxAuthControllerProvider =
-    AutoDisposeAsyncNotifierProvider<DropboxAuthController, bool>.internal(
-  DropboxAuthController.new,
-  name: r'dropboxAuthControllerProvider',
+/// See also [tutorialAuthRepository].
+@ProviderFor(tutorialAuthRepository)
+final tutorialAuthRepositoryProvider =
+    AutoDisposeProvider<LocalAuthRepository>.internal(
+  tutorialAuthRepository,
+  name: r'tutorialAuthRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$dropboxAuthControllerHash,
+      : _$tutorialAuthRepositoryHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$DropboxAuthController = AutoDisposeAsyncNotifier<bool>;
+typedef TutorialAuthRepositoryRef = AutoDisposeProviderRef<LocalAuthRepository>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

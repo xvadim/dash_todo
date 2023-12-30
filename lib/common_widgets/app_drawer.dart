@@ -10,6 +10,7 @@ import '../common/sizes.dart';
 import '../features/authentication/data/dropbox_auth_repository.dart';
 import '../features/authentication/domain/app_user.dart';
 import '../features/authentication/presentation/application/app_user_controller.dart';
+import '../features/authentication/presentation/application/dropbox_auth_controller.dart';
 import '../routing/app_router.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -29,12 +30,7 @@ class AppDrawer extends StatelessWidget {
             return ListTile(
               leading: const Icon(Icons.logout),
               title: Text('menu.logout'.tr()),
-              onTap: () async {
-                final authRepos = ref.read(dropboxAuthRepositoryProvider);
-                final appUserCtr = ref.read(appUserControllerProvider);
-                await appUserCtr.logout();
-                await authRepos.logout();
-              },
+              onTap: () async => _logout(ref),
             );
           },
         ),
@@ -60,6 +56,13 @@ class AppDrawer extends StatelessWidget {
       ],
     );
   }
+
+  Future<void> _logout(WidgetRef ref) async {
+    final appUserCtr = ref.read(appUserControllerProvider);
+    await appUserCtr.logout();
+
+    await ref.read(dropboxAuthControllerProvider.notifier).logout();
+  }
 }
 
 class _AppUserHeader extends ConsumerWidget {
@@ -72,11 +75,14 @@ class _AppUserHeader extends ConsumerWidget {
     if (appUser == null) {
       return const Icon(Icons.person);
     }
+    final avatarUrl = appUser.avatarUrl;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         CircleAvatar(
-          backgroundImage: CachedNetworkImageProvider(appUser.avatarUrl),
+          backgroundImage:
+              avatarUrl.isEmpty ? null : CachedNetworkImageProvider(avatarUrl),
+          child: avatarUrl.isNotEmpty ? null : Text(appUser.name[0]),
         ),
         gapH8,
         Text(appUser.name),

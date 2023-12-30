@@ -7,7 +7,9 @@ import '../../../assets/assets.gen.dart';
 import '../../../common/build_context_extension.dart';
 import '../../../common/sizes.dart';
 import '../../../common/ui_utils.dart';
+import '../data/local_auth_repository.dart';
 import 'application/dropbox_auth_controller.dart';
+import 'application/local_auth_controller.dart';
 import 'widgets/or_separator.dart';
 
 class SignInPage extends ConsumerStatefulWidget {
@@ -69,7 +71,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                       ),
                       title: 'signin.signinDropbox'.tr(),
                       subtitle: 'signin.syncDropbox'.tr(),
-                      onPressed: () async => _authorizeDropbox(),
+                      onPressed: () async => await _authorizeDropbox(),
                     ),
                     OrSeparator(width: separatorWidth),
                     _SignInButton(
@@ -85,9 +87,16 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                       ),
                     ),
                     OrSeparator(width: separatorWidth),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text('signin.withoutSync'.tr()),
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        TextButton(
+                          onPressed: () async => await _loginTutorial(),
+                          child: Text('signin.withoutSync'.tr()),
+                        ),
+                        Text('signin.tutorialTasks'.tr()),
+                      ],
                     ),
                   ],
                 ),
@@ -109,6 +118,10 @@ class _SignInPageState extends ConsumerState<SignInPage> {
       await ref.read(dropboxAuthControllerProvider.notifier).login();
       _isAuthInProgress = false;
     }
+  }
+
+  Future<void> _loginTutorial() async {
+    await ref.read(localAuthControllerProvider.notifier).login();
   }
 }
 

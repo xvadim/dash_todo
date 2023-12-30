@@ -14,7 +14,8 @@
     "syncDropbox": "for Dropbox sync",
     "syncLocally": "for files on this device",
     "or": "or",
-    "withoutSync": "Try without tasks sync"
+    "withoutSync": "Try without tasks sync",
+    "tutorialTasks": "for tutorial tasks"
   },
   "settings": {
     "dropboxFilesSetupTitle": "Select files in Dropbox",

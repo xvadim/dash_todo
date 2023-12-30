@@ -33,4 +33,12 @@ class DropboxAuthController extends _$DropboxAuthController {
       }
     }
   }
+
+  Future<void> logout() async {
+    final authRepository = ref.watch(dropboxAuthRepositoryProvider);
+    state = await AsyncValue.guard(() async {
+      await authRepository.logout();
+      return true;
+    });
+  }
 }
