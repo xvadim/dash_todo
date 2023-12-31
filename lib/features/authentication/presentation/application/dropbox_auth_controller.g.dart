@@ -7,7 +7,7 @@ part of 'dropbox_auth_controller.dart';
 // **************************************************************************
 
 String _$dropboxAuthControllerHash() =>
-    r'23768fd99b7360b28656dde9199d9cee643372f2';
+    r'ecb4f28522bda46031f05c582a97de9e1cc25500';
 
 /// See also [DropboxAuthController].
 @ProviderFor(DropboxAuthController)

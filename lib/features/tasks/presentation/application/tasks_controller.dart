@@ -1,8 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../core/sync_type_provider.dart';
 import '../../../files/data/dropbox_files_repository.dart';
 import '../../../files/data/tutorial_files_repository.dart';
+import '../../../files/domain/repos/base_files_repository.dart';
 import '../../data/tasks_repository.dart';
 import '../../domain/task.dart';
 import '../../domain/todos.dart';
@@ -31,7 +33,8 @@ class TasksController extends _$TasksController {
 
   Future<void> completeTask(Task task) async {
     final tasksRepo = ref.read(tasksRepositoryProvider);
-    final tasks = await tasksRepo.completeTask(task);
+    final archive = ref.read(syncTypeProvider).isArchiveEnabled;
+    final tasks = await tasksRepo.completeTask(task, archive: archive);
     await _updateState(tasks);
   }
 
@@ -52,9 +55,13 @@ class TasksController extends _$TasksController {
   }
 
   Future<Todos> _downloadTasks() async {
-    // final filesRepo = ref.read(dropboxFilesRepositoryProvider);
-    final filesRepo = ref.read(tutorialFilesRepositoryProvider);
-
+    //TODO: use FilesRepo factory
+    late BaseFilesRepository filesRepo;
+    if (ref.read(syncTypeProvider).syncType == SyncType.dropbox) {
+      filesRepo = ref.read(dropboxFilesRepositoryProvider);
+    } else {
+      filesRepo = ref.read(tutorialFilesRepositoryProvider);
+    }
     String? todoFile;
     String? archiveFile;
     (todoFile, archiveFile) = await filesRepo.downloadTasks();

@@ -4,11 +4,12 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../common/sizes.dart';
-import '../../../common_widgets/app_drawer.dart';
+import '../../core/sync_type_provider.dart';
+import 'widgets/app_drawer.dart';
 import 'application/tasks_controller.dart';
 import 'widgets/list_item_animated_wrapper.dart';
 import 'widgets/project_chooser.dart';
-import 'widgets/toto_item.dart';
+import 'widgets/todo_item.dart';
 
 enum _MenuItem {
   downloadTasks,
@@ -41,15 +42,16 @@ class TasksPage extends ConsumerWidget {
                     ],
                   ),
                 ),
-                PopupMenuItem(
-                  value: _MenuItem.uploadTasks,
-                  child: Row(
-                    children: [
-                      const Icon(Icons.upload),
-                      Text('actions.upload'.tr()),
-                    ],
+                if (ref.read(syncTypeProvider).isUploadEnabled)
+                  PopupMenuItem(
+                    value: _MenuItem.uploadTasks,
+                    child: Row(
+                      children: [
+                        const Icon(Icons.upload),
+                        Text('actions.upload'.tr()),
+                      ],
+                    ),
                   ),
-                ),
               ],
               onSelected: (item) => _onItemTap(context, ref, item),
             ),

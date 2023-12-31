@@ -6,6 +6,13 @@ part 'settings_repository.g.dart';
 class SettingsRepository {
   SettingsRepository(this._sharedPrefs);
 
+  //#region SyncType
+  int get syncTypeIndex => _sharedPrefs.getInt(_keySyncType) ?? 0;
+  Future<void> saveSyncType(int index) async {
+    await _sharedPrefs.setInt(_keySyncType, index);
+  }
+  //#enregion
+
   //#region Dropbox
   Future<void> saveDropboxCredentials(String credentials) async {
     await _sharedPrefs.setString(_keyDropboxCredentials, credentials);
@@ -76,6 +83,7 @@ class SettingsRepository {
   static const _keyAppUserAvatarUrl = 'appUserAvatarUrl';
   static const _keyTodoFilePath = 'todoFilePath';
   static const _keyArchiveFilePath = 'archiveFilePath';
+  static const _keySyncType = 'syncType';
 }
 
 @Riverpod(keepAlive: true)

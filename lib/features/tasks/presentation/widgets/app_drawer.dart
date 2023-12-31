@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../common/build_context_extension.dart';
-import '../common/consts.dart';
-import '../common/sizes.dart';
-import '../features/authentication/data/dropbox_auth_repository.dart';
-import '../features/authentication/domain/app_user.dart';
-import '../features/authentication/presentation/application/app_user_controller.dart';
-import '../features/authentication/presentation/application/dropbox_auth_controller.dart';
-import '../routing/app_router.dart';
+import '../../../../common/build_context_extension.dart';
+import '../../../../common/consts.dart';
+import '../../../../common/sizes.dart';
+import '../../../authentication/domain/app_user.dart';
+import '../../../authentication/presentation/application/app_user_controller.dart';
+import '../../../authentication/presentation/application/dropbox_auth_controller.dart';
+import '../../../core/sync_type_provider.dart';
+import '../../../../routing/app_router.dart';
 
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
@@ -58,10 +58,11 @@ class AppDrawer extends StatelessWidget {
   }
 
   Future<void> _logout(WidgetRef ref) async {
-    final appUserCtr = ref.read(appUserControllerProvider);
-    await appUserCtr.logout();
-
-    await ref.read(dropboxAuthControllerProvider.notifier).logout();
+    await Future.wait([
+      ref.read(syncTypeProvider).setSyncType(SyncType.unset),
+      ref.read(appUserControllerProvider).logout(),
+      ref.read(dropboxAuthControllerProvider.notifier).logout(),
+    ]);
   }
 }
 

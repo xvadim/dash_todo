@@ -1,5 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../core/sync_type_provider.dart';
 import '../../data/dropbox_auth_repository.dart';
 import 'app_user_controller.dart';
 
@@ -23,6 +24,7 @@ class DropboxAuthController extends _$DropboxAuthController {
     state = await AsyncValue.guard(authRepository.login);
     if (state case AsyncData(:final value)) {
       if (value) {
+        await ref.read(syncTypeProvider).setSyncType(SyncType.dropbox);
         // ignore: avoid_manual_providers_as_generated_provider_dependency
         final appUserCtr = ref.read(appUserControllerProvider);
         await appUserCtr.setupUser(

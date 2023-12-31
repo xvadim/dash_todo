@@ -95,12 +95,14 @@ extension TaskEx on Task {
     return buffer.toString();
   }
 
-  Task complete() => copyWith(
-        isCompleted: true,
-        priority: '',
-        completionDate: DateTime.now(),
-        rawString: '',
-      );
+  //TODO: optimize
+  Task complete() {
+    final completed = copyWith(
+      isCompleted: true,
+      completionDate: DateTime.now(),
+    );
+    return completed.copyWith(rawString: completed.toRawString());
+  }
 
   //TODO: compare parts
   int compareTo(Task other) {

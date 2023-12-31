@@ -7,7 +7,7 @@ part of 'local_auth_controller.dart';
 // **************************************************************************
 
 String _$localAuthControllerHash() =>
-    r'5af2d81690db17ff54594a107dabf8f0de7dbfca';
+    r'2b0e962d353beced6f2c716d1c60bc67e958c09b';
 
 /// See also [LocalAuthController].
 @ProviderFor(LocalAuthController)

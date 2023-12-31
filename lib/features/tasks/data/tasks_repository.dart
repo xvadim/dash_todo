@@ -74,10 +74,14 @@ class TasksRepository {
     return Todos(tasks: tasks, projects: _projects);
   }
 
-  Future<List<Task>> completeTask(Task task) async {
+  Future<List<Task>> completeTask(Task task, {bool archive = true}) async {
     _tasks = _tasks.where((t) => t.id != task.id).toList();
     final completedTask = task.complete();
-    await _archiveTask(completedTask);
+    if (archive) {
+      await _archiveTask(completedTask);
+    } else {
+      _tasks.add(completedTask);
+    }
     //TODO: save only when needed
     await _saveTasks();
 

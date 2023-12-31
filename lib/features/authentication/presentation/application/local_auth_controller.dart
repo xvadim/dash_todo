@@ -1,4 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import '../../../core/sync_type_provider.dart';
 import '../../data/local_auth_repository.dart';
 import 'app_user_controller.dart';
 
@@ -16,6 +17,7 @@ class LocalAuthController extends _$LocalAuthController {
     final authRepository = ref.read(tutorialAuthRepositoryProvider);
     state = await AsyncValue.guard(authRepository.login);
 
+    await ref.read(syncTypeProvider).setSyncType(SyncType.tutorial);
     //always successful login
     final appUserCtr = ref.read(appUserControllerProvider);
     await appUserCtr.setupUser(

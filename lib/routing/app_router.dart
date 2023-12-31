@@ -4,6 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../features/authentication/presentation/application/app_user_controller.dart';
 import '../features/authentication/presentation/sign_in_page.dart';
+import '../features/core/sync_type_provider.dart';
 import '../features/files/presentation/dropbox_file_selector_page.dart';
 import '../features/settings/presentation/files_setup_page.dart';
 import '../features/tasks/presentation/tasks_page.dart';
@@ -37,7 +38,11 @@ GoRouter goRouter(GoRouterRef ref) {
       final path = state.uri.path;
       if (appUserCtr.isAuthorized) {
         if (path.startsWith(_signInPath)) {
-          return _filesSetup;
+          if (ref.read(syncTypeProvider).isFilesSetupNeeded) {
+            return _filesSetup;
+          } else {
+            return _tasksPath;
+          }
         }
       } else {
         if (path != _signInPath) {
