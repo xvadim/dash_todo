@@ -17,7 +17,9 @@ class TodoItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final item = ref.watch(currentTask);
-    final priorityColor = _priorityColor(item.priority);
+    final priorityColor = _priorityColor(
+      item.isCompleted ? '' : item.priority,
+    );
 
     return Slidable(
       startActionPane: ActionPane(
@@ -71,7 +73,7 @@ class TodoItem extends ConsumerWidget {
         child: Row(
           children: [
             Container(
-              color: item.priority.isEmpty
+              color: item.priority.isEmpty || item.isCompleted
                   ? priorityColor.shade300
                   : priorityColor,
               width: priorityMarkerWidth,
@@ -86,6 +88,10 @@ class TodoItem extends ConsumerWidget {
                 item.text,
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  decoration:
+                      item.isCompleted ? TextDecoration.lineThrough : null,
+                ),
               ),
             ),
           ],
