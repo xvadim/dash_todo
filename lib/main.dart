@@ -2,7 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logger/logger.dart';
 
+import 'common/logger.dart';
 import 'dash_todo_app.dart';
 import 'features/authentication/data/dropbox_auth_repository.dart';
 import 'features/authentication/presentation/application/app_user_controller.dart';
@@ -18,6 +20,8 @@ Future<void> main() async {
   await EasyLocalization.ensureInitialized();
 
   final container = await _initContainer();
+
+  Logger.addLogListener(logCallback);
 
   runApp(
     UncontrolledProviderScope(
