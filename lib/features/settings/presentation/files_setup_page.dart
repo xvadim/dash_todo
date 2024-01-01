@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../routing/app_router.dart';
+import '../../tasks/presentation/tasks_page.dart';
 import '../data/settings_repository.dart';
 
 // TODO: optimize, atm we rebuild the whole widget as it is pretty simple
@@ -108,8 +109,10 @@ class _FilesSetupPageState extends ConsumerState<FilesSetupPage> {
         context.pop();
       } else {
         //It's a case after login to Dropbox and setup files
-        //TODO: force download
-        context.goNamed(AppRoute.tasks.name);
+        context.goNamed(
+          AppRoute.tasks.name,
+          extra: {TasksPage.keyIsForceDownload: true},
+        );
       }
     }
   }

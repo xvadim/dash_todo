@@ -60,6 +60,7 @@ class TasksController extends _$TasksController {
     if (ref.read(syncTypeProvider).syncType == SyncType.dropbox) {
       filesRepo = ref.read(dropboxFilesRepositoryProvider);
     } else {
+      // ignore: avoid_manual_providers_as_generated_provider_dependency
       filesRepo = ref.read(tutorialFilesRepositoryProvider);
     }
     String? todoFile;

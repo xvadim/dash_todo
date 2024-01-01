@@ -28,7 +28,6 @@ const _dropboxFilesSelector = 'dropboxFilesSelector';
 @riverpod
 GoRouter goRouter(GoRouterRef ref) {
   //TODO: support local syncing & auth
-  // ignore: avoid_manual_providers_as_generated_provider_dependency
   final appUserCtr = ref.read(appUserControllerProvider);
   return GoRouter(
     initialLocation: _tasksPath,
@@ -41,6 +40,9 @@ GoRouter goRouter(GoRouterRef ref) {
           if (ref.read(syncTypeProvider).isFilesSetupNeeded) {
             return _filesSetup;
           } else {
+            //a small workaround for passing extra params on redirection
+            //after login force download tasks
+            _extra = {TasksPage.keyIsForceDownload: true};
             return _tasksPath;
           }
         }
@@ -63,8 +65,11 @@ GoRouter goRouter(GoRouterRef ref) {
       GoRoute(
         path: _tasksPath,
         name: AppRoute.tasks.name,
-        pageBuilder: (context, state) => const NoTransitionPage(
-          child: TasksPage(title: 'Dash todO'),
+        pageBuilder: (context, state) => NoTransitionPage(
+          child: TasksPage(
+            title: 'Dash todO',
+            isForceDownload: _isForceDownload(state),
+          ),
         ),
       ),
       GoRoute(
@@ -81,4 +86,18 @@ GoRouter goRouter(GoRouterRef ref) {
       ),
     ],
   );
+}
+
+Map<String, dynamic>? _extra;
+
+bool _isForceDownload(GoRouterState state) {
+  bool isForceDownload = false;
+  if (state.extra is Map<String, dynamic>) {
+    final extra = state.extra as Map<String, dynamic>;
+    isForceDownload = extra[TasksPage.keyIsForceDownload] ?? false;
+  } else if (_extra != null) {
+    isForceDownload = _extra![TasksPage.keyIsForceDownload] ?? false;
+    _extra = null;
+  }
+  return isForceDownload;
 }

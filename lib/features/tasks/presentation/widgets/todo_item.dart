@@ -118,7 +118,7 @@ class TodoItem extends ConsumerWidget {
 }
 
 class _PriorityBar extends StatelessWidget {
-  const _PriorityBar({super.key, required this.color});
+  const _PriorityBar({required this.color});
   final Color color;
 
   @override

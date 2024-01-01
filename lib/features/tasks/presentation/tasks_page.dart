@@ -17,9 +17,17 @@ enum _MenuItem {
 }
 
 class TasksPage extends ConsumerWidget {
-  const TasksPage({super.key, required this.title});
+  const TasksPage({
+    super.key,
+    required this.title,
+    this.isForceDownload = false,
+  });
 
   final String title;
+
+  final bool isForceDownload;
+
+  static const keyIsForceDownload = 'forceDownload';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -58,7 +66,7 @@ class TasksPage extends ConsumerWidget {
           ],
         ),
         drawer: const Drawer(child: AppDrawer()),
-        body: const _TasksListView(),
+        body: _TasksListView(isForceDownload: isForceDownload),
       ),
     );
   }
@@ -80,7 +88,9 @@ class TasksPage extends ConsumerWidget {
 
 // https://medium.com/@roaakdm/take-your-flutter-animations-to-the-next-level-flutter-vikings-talk-c7130939a4c1
 class _TasksListView extends ConsumerStatefulWidget {
-  const _TasksListView();
+  const _TasksListView({this.isForceDownload = false});
+
+  final bool isForceDownload;
 
   @override
   ConsumerState<_TasksListView> createState() => _TasksListViewState();
@@ -89,12 +99,25 @@ class _TasksListView extends ConsumerStatefulWidget {
 class _TasksListViewState extends ConsumerState<_TasksListView> {
   final ValueNotifier<ScrollDirection> scrollDirectionNotifier =
       ValueNotifier<ScrollDirection>(ScrollDirection.forward);
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.isForceDownload) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _forceDownloadTasks();
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(filteredTasksProvider);
 
     return switch (state) {
       AsyncError(:final error) => Center(
+          //TODO: localize
           child: Text('Something went wrong: $error'),
         ),
       AsyncData(value: final todos) => Padding(
@@ -136,5 +159,9 @@ class _TasksListViewState extends ConsumerState<_TasksListView> {
         ),
       _ => const Center(child: CircularProgressIndicator()),
     };
+  }
+
+  Future<void> _forceDownloadTasks() async {
+    await ref.read(tasksControllerProvider.notifier).downloadTasks();
   }
 }
