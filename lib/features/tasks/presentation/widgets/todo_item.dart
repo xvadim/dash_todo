@@ -11,36 +11,41 @@ const priorityMarkerWidth = 4.0;
 class TodoItem extends ConsumerWidget {
   const TodoItem({super.key});
 
-  //TODO: calculate?
-  static const itemExtent = 80.0;
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final item = ref.watch(currentTask);
-    final priorityColor = _priorityColor(
+    final basePriorityColor = _priorityColor(
       item.isCompleted ? '' : item.priority,
     );
+    final fillColor = item.priority.isEmpty
+        ? basePriorityColor.shade200
+        : basePriorityColor.shade100;
+    final priorityColor = item.priority.isEmpty || item.isCompleted
+        ? basePriorityColor.shade300
+        : basePriorityColor;
 
     return Slidable(
-      startActionPane: ActionPane(
-        motion: const DrawerMotion(),
-        children: [
-          SlidableAction(
-            onPressed: (_) async => _completeTask(ref, item),
-            backgroundColor: Colors.green,
-            foregroundColor: Colors.white,
-            icon: Icons.check,
-            label: 'Done',
-          ),
-          SlidableAction(
-            onPressed: (_) => {},
-            backgroundColor: Colors.blue,
-            foregroundColor: Colors.white,
-            icon: Icons.play_arrow,
-            label: 'Run',
-          ),
-        ],
-      ),
+      startActionPane: item.isCompleted
+          ? null
+          : ActionPane(
+              motion: const DrawerMotion(),
+              children: [
+                SlidableAction(
+                  onPressed: (_) async => _completeTask(ref, item),
+                  backgroundColor: Colors.green,
+                  foregroundColor: Colors.white,
+                  icon: Icons.check,
+                  label: 'Done',
+                ),
+                SlidableAction(
+                  onPressed: (_) => {},
+                  backgroundColor: Colors.blue,
+                  foregroundColor: Colors.white,
+                  icon: Icons.play_arrow,
+                  label: 'Run',
+                ),
+              ],
+            ),
       endActionPane: ActionPane(
         motion: const DrawerMotion(),
         children: [
@@ -50,38 +55,34 @@ class TodoItem extends ConsumerWidget {
             foregroundColor: Colors.white,
             icon: Icons.delete,
             label: 'Delete',
+            borderRadius: const BorderRadius.all(_borderRadius),
           ),
         ],
       ),
       child: Container(
         decoration: BoxDecoration(
           //TODO: create themes
-          color: item.priority.isEmpty
-              ? priorityColor.shade200
-              : priorityColor.shade100,
+          color: fillColor,
           border: Border(
             top: BorderSide(color: Colors.grey.shade700),
             bottom: BorderSide(color: Colors.grey.shade700),
             right: BorderSide(color: Colors.grey.shade700),
           ),
           borderRadius: const BorderRadius.only(
-            topRight: Radius.circular(8),
-            bottomRight: Radius.circular(8),
+            topRight: _borderRadius,
+            bottomRight: _borderRadius,
           ),
         ),
-        height: itemExtent,
+        height: _itemExtent,
         child: Row(
           children: [
-            Container(
-              color: item.priority.isEmpty || item.isCompleted
-                  ? priorityColor.shade300
-                  : priorityColor,
-              width: priorityMarkerWidth,
-            ),
+            _PriorityBar(color: priorityColor),
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-              child: _PriorityIndicator(priority: item.priority),
+              padding: const EdgeInsets.all(4.0),
+              child: _PriorityIndicator(
+                priority: item.priority,
+                color: priorityColor,
+              ),
             ),
             Expanded(
               child: Text(
@@ -100,6 +101,10 @@ class TodoItem extends ConsumerWidget {
     );
   }
 
+  //TODO: calculate
+  static const _itemExtent = 80.0;
+  static const _borderRadius = Radius.circular(8);
+
   Future<void> _completeTask(WidgetRef ref, Task task) async {
     final taskController = ref.read(tasksControllerProvider.notifier);
     await taskController.completeTask(task);
@@ -112,29 +117,50 @@ class TodoItem extends ConsumerWidget {
   }
 }
 
-class _PriorityIndicator extends StatelessWidget {
-  const _PriorityIndicator({required this.priority});
-
-  final String priority;
+class _PriorityBar extends StatelessWidget {
+  const _PriorityBar({super.key, required this.color});
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 32,
-      height: 32,
-      child: priority.isEmpty
-          ? const SizedBox.shrink()
-          : Container(
-              decoration: BoxDecoration(
-                color: _priorityColor(priority),
-                shape: BoxShape.circle,
-              ),
-              child: Center(
-                child: Text(priority, style: context.textTheme.titleLarge),
-              ),
-            ),
+      width: priorityMarkerWidth,
+      height: double.maxFinite,
+      child: ColoredBox(color: color),
     );
   }
+}
+
+class _PriorityIndicator extends StatelessWidget {
+  const _PriorityIndicator({required this.priority, required this.color});
+
+  final String priority;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: _indicatorSize,
+      height: _indicatorSize,
+      child: Container(
+        decoration: BoxDecoration(
+          color: color,
+          border: Border.all(),
+          shape: BoxShape.circle,
+        ),
+        child: Center(
+          child: Text(
+            priority,
+            style: context.textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  static const _indicatorSize = 32.0;
 }
 
 MaterialColor _priorityColor(String priority) => switch (priority) {

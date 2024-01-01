@@ -1,7 +1,7 @@
 (A) Tap on the title ↑ to filter tasks by a project +tutorial
 (B) Swipe right-to-left to delete me  +tutorial ←
 (C) → Swipe left-to-right to complete me  +tutorial
-(F) ← tap on the priority indicator to re-prioritize me (TBD) +tutorial
+(E) ← tap on the priority indicator to re-prioritize me (TBD) +tutorial
 (Z) This is a task with the lowest priority from another project +prj
 An unprioritized task from the project +prj
 This is unprioritized task without any projects
