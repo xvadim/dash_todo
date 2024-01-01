@@ -7,7 +7,7 @@ import 'dash_todo_app.dart';
 import 'features/authentication/data/dropbox_auth_repository.dart';
 import 'features/authentication/presentation/application/app_user_controller.dart';
 import 'features/settings/data/settings_repository.dart';
-import 'helpers/language_helper.dart';
+import 'common/language_helper.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
