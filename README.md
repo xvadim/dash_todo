@@ -10,3 +10,4 @@ About folders structure: [Riverpod Folder Structure](https://www.dbestech.com/tu
 4. Build the app as usually
 5. Suffer^W Enjoy
 
+P.S. there are a lot of TODOs in the todo app source as work is still in progress :)
